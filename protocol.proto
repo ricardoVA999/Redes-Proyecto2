@@ -1,0 +1,40 @@
+syntax = "proto2";
+package protocol;
+
+// ----- REGISTRO DE USUARIOS Y ENVIO DE POSIBLES ROOMS A UNIRSE -----
+// Mandar informacion inicial al server, nombre de usuario e ip
+// Sent from CLIENT
+message ClientConnect {
+  required string username = 1;
+  optional string ip = 2;
+}
+
+// Received from SERVER
+message RoomsToJoin {
+  required string rooms = 1;
+}
+
+// CLIENT GAME OPTIONS
+// "option" helps the Server identify the type of request it is receiving and what to use to parse it
+// option 1: ClientConnect
+message ClientMessage {
+  required int32 option = 1;
+
+  optional int32 userId = 2;
+
+  optional ClientConnect connect = 3;
+}
+
+// SERVER GAME OPTIONS
+// "option" helps the Client identify the type of response it is receiving and what to use to parse it
+// option 1: RoomsToJoin
+message ServerMessage {
+  required int32 option = 1;
+
+  optional RoomsToJoin rooms = 2;
+}
+
+// ERROR GENERALIZADO
+message ErrorResponse {
+  required string errorMessage = 1;
+}
