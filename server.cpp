@@ -155,6 +155,31 @@ void *ThreadWork(void *params)
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
+        if (messageReceived.option() == 2)
+        {
+            protocol::JoinRoom JoinRoom = messageReceived.roomjoin();
+            thisClient.room = JoinRoom.room();
+            if (JoinRoom.room()=="1"){
+                RoomOne.users.insert(RoomOne.users.end(), thisClient.username);
+                printf("Usuarios en room 1:\n");
+                for (auto it = RoomOne.users.begin(); it != RoomOne.users.end(); ++it)
+                    std::cout << "-"<< *it ;
+                std::cout << "\n";
+            }
+            else{
+                RoomTwo.users.insert(RoomTwo.users.end(), thisClient.username);
+                printf("Usuarios en room 2:\n");
+                for (auto it = RoomTwo.users.begin(); it != RoomTwo.users.end(); ++it)
+                    std::cout  << "-"<<  *it ;
+                std::cout << "\n";
+            }
+            if (RoomOne.users.size() == 4){
+                //Todo Start Game
+            }
+            if (RoomTwo.users.size() == 4){
+                //Todo Start Game
+            }
+        }
         else
         {
             SendErrorResponse(socketFd, "Opcion indicada no existe.");

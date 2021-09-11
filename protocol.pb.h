@@ -38,7 +38,7 @@ namespace protobuf_protocol_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -55,6 +55,9 @@ extern ClientMessageDefaultTypeInternal _ClientMessage_default_instance_;
 class ErrorResponse;
 class ErrorResponseDefaultTypeInternal;
 extern ErrorResponseDefaultTypeInternal _ErrorResponse_default_instance_;
+class JoinRoom;
+class JoinRoomDefaultTypeInternal;
+extern JoinRoomDefaultTypeInternal _JoinRoom_default_instance_;
 class RoomsToJoin;
 class RoomsToJoinDefaultTypeInternal;
 extern RoomsToJoinDefaultTypeInternal _RoomsToJoin_default_instance_;
@@ -67,6 +70,7 @@ namespace protobuf {
 template<> ::protocol::ClientConnect* Arena::CreateMaybeMessage<::protocol::ClientConnect>(Arena*);
 template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::ClientMessage>(Arena*);
 template<> ::protocol::ErrorResponse* Arena::CreateMaybeMessage<::protocol::ErrorResponse>(Arena*);
+template<> ::protocol::JoinRoom* Arena::CreateMaybeMessage<::protocol::JoinRoom>(Arena*);
 template<> ::protocol::RoomsToJoin* Arena::CreateMaybeMessage<::protocol::RoomsToJoin>(Arena*);
 template<> ::protocol::ServerMessage* Arena::CreateMaybeMessage<::protocol::ServerMessage>(Arena*);
 }  // namespace protobuf
@@ -358,6 +362,250 @@ class RoomsToJoin : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
+class JoinRoom : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.JoinRoom) */ {
+ public:
+  JoinRoom();
+  virtual ~JoinRoom();
+
+  JoinRoom(const JoinRoom& from);
+
+  inline JoinRoom& operator=(const JoinRoom& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JoinRoom(JoinRoom&& from) noexcept
+    : JoinRoom() {
+    *this = ::std::move(from);
+  }
+
+  inline JoinRoom& operator=(JoinRoom&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JoinRoom& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JoinRoom* internal_default_instance() {
+    return reinterpret_cast<const JoinRoom*>(
+               &_JoinRoom_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(JoinRoom* other);
+  friend void swap(JoinRoom& a, JoinRoom& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JoinRoom* New() const final {
+    return CreateMaybeMessage<JoinRoom>(NULL);
+  }
+
+  JoinRoom* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JoinRoom>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JoinRoom& from);
+  void MergeFrom(const JoinRoom& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JoinRoom* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string room = 1;
+  bool has_room() const;
+  void clear_room();
+  static const int kRoomFieldNumber = 1;
+  const ::std::string& room() const;
+  void set_room(const ::std::string& value);
+  #if LANG_CXX11
+  void set_room(::std::string&& value);
+  #endif
+  void set_room(const char* value);
+  void set_room(const char* value, size_t size);
+  ::std::string* mutable_room();
+  ::std::string* release_room();
+  void set_allocated_room(::std::string* room);
+
+  // @@protoc_insertion_point(class_scope:protocol.JoinRoom)
+ private:
+  void set_has_room();
+  void clear_has_room();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr room_;
+  friend struct ::protobuf_protocol_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ErrorResponse) */ {
+ public:
+  ErrorResponse();
+  virtual ~ErrorResponse();
+
+  ErrorResponse(const ErrorResponse& from);
+
+  inline ErrorResponse& operator=(const ErrorResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ErrorResponse(ErrorResponse&& from) noexcept
+    : ErrorResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline ErrorResponse& operator=(ErrorResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ErrorResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ErrorResponse* internal_default_instance() {
+    return reinterpret_cast<const ErrorResponse*>(
+               &_ErrorResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(ErrorResponse* other);
+  friend void swap(ErrorResponse& a, ErrorResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ErrorResponse* New() const final {
+    return CreateMaybeMessage<ErrorResponse>(NULL);
+  }
+
+  ErrorResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ErrorResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ErrorResponse& from);
+  void MergeFrom(const ErrorResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ErrorResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string errorMessage = 1;
+  bool has_errormessage() const;
+  void clear_errormessage();
+  static const int kErrorMessageFieldNumber = 1;
+  const ::std::string& errormessage() const;
+  void set_errormessage(const ::std::string& value);
+  #if LANG_CXX11
+  void set_errormessage(::std::string&& value);
+  #endif
+  void set_errormessage(const char* value);
+  void set_errormessage(const char* value, size_t size);
+  ::std::string* mutable_errormessage();
+  ::std::string* release_errormessage();
+  void set_allocated_errormessage(::std::string* errormessage);
+
+  // @@protoc_insertion_point(class_scope:protocol.ErrorResponse)
+ private:
+  void set_has_errormessage();
+  void clear_has_errormessage();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr errormessage_;
+  friend struct ::protobuf_protocol_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ClientMessage) */ {
  public:
   ClientMessage();
@@ -400,7 +648,7 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    4;
 
   void Swap(ClientMessage* other);
   friend void swap(ClientMessage& a, ClientMessage& b) {
@@ -464,6 +712,18 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::ClientConnect* mutable_connect();
   void set_allocated_connect(::protocol::ClientConnect* connect);
 
+  // optional .protocol.JoinRoom roomJoin = 4;
+  bool has_roomjoin() const;
+  void clear_roomjoin();
+  static const int kRoomJoinFieldNumber = 4;
+  private:
+  const ::protocol::JoinRoom& _internal_roomjoin() const;
+  public:
+  const ::protocol::JoinRoom& roomjoin() const;
+  ::protocol::JoinRoom* release_roomjoin();
+  ::protocol::JoinRoom* mutable_roomjoin();
+  void set_allocated_roomjoin(::protocol::JoinRoom* roomjoin);
+
   // required int32 option = 1;
   bool has_option() const;
   void clear_option();
@@ -486,11 +746,14 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   void clear_has_userid();
   void set_has_connect();
   void clear_has_connect();
+  void set_has_roomjoin();
+  void clear_has_roomjoin();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::protocol::ClientConnect* connect_;
+  ::protocol::JoinRoom* roomjoin_;
   ::google::protobuf::int32 option_;
   ::google::protobuf::int32 userid_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
@@ -539,7 +802,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ServerMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    5;
 
   void Swap(ServerMessage* other);
   friend void swap(ServerMessage& a, ServerMessage& b) {
@@ -637,128 +900,6 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::ErrorResponse* error_;
   ::protocol::RoomsToJoin* rooms_;
   ::google::protobuf::int32 option_;
-  friend struct ::protobuf_protocol_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ErrorResponse) */ {
- public:
-  ErrorResponse();
-  virtual ~ErrorResponse();
-
-  ErrorResponse(const ErrorResponse& from);
-
-  inline ErrorResponse& operator=(const ErrorResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  ErrorResponse(ErrorResponse&& from) noexcept
-    : ErrorResponse() {
-    *this = ::std::move(from);
-  }
-
-  inline ErrorResponse& operator=(ErrorResponse&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const ErrorResponse& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ErrorResponse* internal_default_instance() {
-    return reinterpret_cast<const ErrorResponse*>(
-               &_ErrorResponse_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  void Swap(ErrorResponse* other);
-  friend void swap(ErrorResponse& a, ErrorResponse& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline ErrorResponse* New() const final {
-    return CreateMaybeMessage<ErrorResponse>(NULL);
-  }
-
-  ErrorResponse* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<ErrorResponse>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const ErrorResponse& from);
-  void MergeFrom(const ErrorResponse& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(ErrorResponse* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required string errorMessage = 1;
-  bool has_errormessage() const;
-  void clear_errormessage();
-  static const int kErrorMessageFieldNumber = 1;
-  const ::std::string& errormessage() const;
-  void set_errormessage(const ::std::string& value);
-  #if LANG_CXX11
-  void set_errormessage(::std::string&& value);
-  #endif
-  void set_errormessage(const char* value);
-  void set_errormessage(const char* value, size_t size);
-  ::std::string* mutable_errormessage();
-  ::std::string* release_errormessage();
-  void set_allocated_errormessage(::std::string* errormessage);
-
-  // @@protoc_insertion_point(class_scope:protocol.ErrorResponse)
- private:
-  void set_has_errormessage();
-  void clear_has_errormessage();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::internal::ArenaStringPtr errormessage_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
 };
 // ===================================================================
@@ -1042,17 +1183,157 @@ inline void RoomsToJoin::set_allocated_roomsjoin(::std::string* roomsjoin) {
 
 // -------------------------------------------------------------------
 
+// JoinRoom
+
+// required string room = 1;
+inline bool JoinRoom::has_room() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void JoinRoom::set_has_room() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void JoinRoom::clear_has_room() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void JoinRoom::clear_room() {
+  room_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_room();
+}
+inline const ::std::string& JoinRoom::room() const {
+  // @@protoc_insertion_point(field_get:protocol.JoinRoom.room)
+  return room_.GetNoArena();
+}
+inline void JoinRoom::set_room(const ::std::string& value) {
+  set_has_room();
+  room_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.JoinRoom.room)
+}
+#if LANG_CXX11
+inline void JoinRoom::set_room(::std::string&& value) {
+  set_has_room();
+  room_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.JoinRoom.room)
+}
+#endif
+inline void JoinRoom::set_room(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_room();
+  room_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.JoinRoom.room)
+}
+inline void JoinRoom::set_room(const char* value, size_t size) {
+  set_has_room();
+  room_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.JoinRoom.room)
+}
+inline ::std::string* JoinRoom::mutable_room() {
+  set_has_room();
+  // @@protoc_insertion_point(field_mutable:protocol.JoinRoom.room)
+  return room_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* JoinRoom::release_room() {
+  // @@protoc_insertion_point(field_release:protocol.JoinRoom.room)
+  if (!has_room()) {
+    return NULL;
+  }
+  clear_has_room();
+  return room_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void JoinRoom::set_allocated_room(::std::string* room) {
+  if (room != NULL) {
+    set_has_room();
+  } else {
+    clear_has_room();
+  }
+  room_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), room);
+  // @@protoc_insertion_point(field_set_allocated:protocol.JoinRoom.room)
+}
+
+// -------------------------------------------------------------------
+
+// ErrorResponse
+
+// required string errorMessage = 1;
+inline bool ErrorResponse::has_errormessage() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ErrorResponse::set_has_errormessage() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ErrorResponse::clear_has_errormessage() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ErrorResponse::clear_errormessage() {
+  errormessage_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_errormessage();
+}
+inline const ::std::string& ErrorResponse::errormessage() const {
+  // @@protoc_insertion_point(field_get:protocol.ErrorResponse.errorMessage)
+  return errormessage_.GetNoArena();
+}
+inline void ErrorResponse::set_errormessage(const ::std::string& value) {
+  set_has_errormessage();
+  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.ErrorResponse.errorMessage)
+}
+#if LANG_CXX11
+inline void ErrorResponse::set_errormessage(::std::string&& value) {
+  set_has_errormessage();
+  errormessage_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.ErrorResponse.errorMessage)
+}
+#endif
+inline void ErrorResponse::set_errormessage(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_errormessage();
+  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.ErrorResponse.errorMessage)
+}
+inline void ErrorResponse::set_errormessage(const char* value, size_t size) {
+  set_has_errormessage();
+  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.ErrorResponse.errorMessage)
+}
+inline ::std::string* ErrorResponse::mutable_errormessage() {
+  set_has_errormessage();
+  // @@protoc_insertion_point(field_mutable:protocol.ErrorResponse.errorMessage)
+  return errormessage_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ErrorResponse::release_errormessage() {
+  // @@protoc_insertion_point(field_release:protocol.ErrorResponse.errorMessage)
+  if (!has_errormessage()) {
+    return NULL;
+  }
+  clear_has_errormessage();
+  return errormessage_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ErrorResponse::set_allocated_errormessage(::std::string* errormessage) {
+  if (errormessage != NULL) {
+    set_has_errormessage();
+  } else {
+    clear_has_errormessage();
+  }
+  errormessage_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), errormessage);
+  // @@protoc_insertion_point(field_set_allocated:protocol.ErrorResponse.errorMessage)
+}
+
+// -------------------------------------------------------------------
+
 // ClientMessage
 
 // required int32 option = 1;
 inline bool ClientMessage::has_option() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void ClientMessage::set_has_option() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void ClientMessage::clear_has_option() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void ClientMessage::clear_option() {
   option_ = 0;
@@ -1070,13 +1351,13 @@ inline void ClientMessage::set_option(::google::protobuf::int32 value) {
 
 // optional int32 userId = 2;
 inline bool ClientMessage::has_userid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void ClientMessage::set_has_userid() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void ClientMessage::clear_has_userid() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ClientMessage::clear_userid() {
   userid_ = 0;
@@ -1148,6 +1429,64 @@ inline void ClientMessage::set_allocated_connect(::protocol::ClientConnect* conn
   }
   connect_ = connect;
   // @@protoc_insertion_point(field_set_allocated:protocol.ClientMessage.connect)
+}
+
+// optional .protocol.JoinRoom roomJoin = 4;
+inline bool ClientMessage::has_roomjoin() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ClientMessage::set_has_roomjoin() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ClientMessage::clear_has_roomjoin() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ClientMessage::clear_roomjoin() {
+  if (roomjoin_ != NULL) roomjoin_->Clear();
+  clear_has_roomjoin();
+}
+inline const ::protocol::JoinRoom& ClientMessage::_internal_roomjoin() const {
+  return *roomjoin_;
+}
+inline const ::protocol::JoinRoom& ClientMessage::roomjoin() const {
+  const ::protocol::JoinRoom* p = roomjoin_;
+  // @@protoc_insertion_point(field_get:protocol.ClientMessage.roomJoin)
+  return p != NULL ? *p : *reinterpret_cast<const ::protocol::JoinRoom*>(
+      &::protocol::_JoinRoom_default_instance_);
+}
+inline ::protocol::JoinRoom* ClientMessage::release_roomjoin() {
+  // @@protoc_insertion_point(field_release:protocol.ClientMessage.roomJoin)
+  clear_has_roomjoin();
+  ::protocol::JoinRoom* temp = roomjoin_;
+  roomjoin_ = NULL;
+  return temp;
+}
+inline ::protocol::JoinRoom* ClientMessage::mutable_roomjoin() {
+  set_has_roomjoin();
+  if (roomjoin_ == NULL) {
+    auto* p = CreateMaybeMessage<::protocol::JoinRoom>(GetArenaNoVirtual());
+    roomjoin_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClientMessage.roomJoin)
+  return roomjoin_;
+}
+inline void ClientMessage::set_allocated_roomjoin(::protocol::JoinRoom* roomjoin) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete roomjoin_;
+  }
+  if (roomjoin) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      roomjoin = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, roomjoin, submessage_arena);
+    }
+    set_has_roomjoin();
+  } else {
+    clear_has_roomjoin();
+  }
+  roomjoin_ = roomjoin;
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClientMessage.roomJoin)
 }
 
 // -------------------------------------------------------------------
@@ -1294,79 +1633,11 @@ inline void ServerMessage::set_allocated_rooms(::protocol::RoomsToJoin* rooms) {
   // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.rooms)
 }
 
-// -------------------------------------------------------------------
-
-// ErrorResponse
-
-// required string errorMessage = 1;
-inline bool ErrorResponse::has_errormessage() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void ErrorResponse::set_has_errormessage() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ErrorResponse::clear_has_errormessage() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void ErrorResponse::clear_errormessage() {
-  errormessage_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_errormessage();
-}
-inline const ::std::string& ErrorResponse::errormessage() const {
-  // @@protoc_insertion_point(field_get:protocol.ErrorResponse.errorMessage)
-  return errormessage_.GetNoArena();
-}
-inline void ErrorResponse::set_errormessage(const ::std::string& value) {
-  set_has_errormessage();
-  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:protocol.ErrorResponse.errorMessage)
-}
-#if LANG_CXX11
-inline void ErrorResponse::set_errormessage(::std::string&& value) {
-  set_has_errormessage();
-  errormessage_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:protocol.ErrorResponse.errorMessage)
-}
-#endif
-inline void ErrorResponse::set_errormessage(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  set_has_errormessage();
-  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:protocol.ErrorResponse.errorMessage)
-}
-inline void ErrorResponse::set_errormessage(const char* value, size_t size) {
-  set_has_errormessage();
-  errormessage_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:protocol.ErrorResponse.errorMessage)
-}
-inline ::std::string* ErrorResponse::mutable_errormessage() {
-  set_has_errormessage();
-  // @@protoc_insertion_point(field_mutable:protocol.ErrorResponse.errorMessage)
-  return errormessage_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* ErrorResponse::release_errormessage() {
-  // @@protoc_insertion_point(field_release:protocol.ErrorResponse.errorMessage)
-  if (!has_errormessage()) {
-    return NULL;
-  }
-  clear_has_errormessage();
-  return errormessage_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void ErrorResponse::set_allocated_errormessage(::std::string* errormessage) {
-  if (errormessage != NULL) {
-    set_has_errormessage();
-  } else {
-    clear_has_errormessage();
-  }
-  errormessage_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), errormessage);
-  // @@protoc_insertion_point(field_set_allocated:protocol.ErrorResponse.errorMessage)
-}
-
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

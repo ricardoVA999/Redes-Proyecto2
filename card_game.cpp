@@ -141,8 +141,33 @@ int main(int argc, char *argv[])
 	printf("Rooms del servidor:\n");
 	std::cout << serverMessage.rooms().rooms()<< std::endl;
 	//Elegir Room
-	std::cout << serverMessage.rooms().roomsjoin()<< std::endl;
-	//Todo
+	printf("A que room se desea unir:\n");
+	std::string myroom;
+	std::cin >> myroom;
+	 if (myroom == "1" || myroom == "2")
+	 {
+		 if (serverMessage.rooms().roomsjoin().find(myroom) != std::string::npos)
+		 {
+			protocol::JoinRoom *join = new protocol::JoinRoom();
+			join->set_room(myroom);
+		
+			protocol::ClientMessage roomMessage;
+			roomMessage.set_option(2);
+			roomMessage.set_allocated_roomjoin(join);
+			roomMessage.SerializeToString(&message_serialized);
+			strcpy(buffer, message_serialized.c_str());
+			send(sockfd, buffer, message_serialized.size() + 1, 0);
+		 }
+		 else
+		 {
+			 printf("Dicha room esta llena\n");
+			 return 0;
+		 }
+	 }
+	 else {
+		 printf("Dicha room no existe\n");
+		 return 0;
+	 }
 
 	pthread_t thread_id;
 	pthread_attr_t attrs;
@@ -159,7 +184,12 @@ int main(int argc, char *argv[])
 			printf("%d\n", client_opt);
 		}
 		else{
-			return 0;
+			printf("	1. Mandar mensaje\n");
+			printf("	2. Ver cartas\n");
+			printf("	3. Ganar con 3 iguales\n");
+			int client_opt;
+			client_opt = get_client_option();
+			printf("%d\n", client_opt);
 		}
 	}
 
