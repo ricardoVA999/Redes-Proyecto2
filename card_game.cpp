@@ -29,6 +29,26 @@ void *listenToMessages(void *args)
 {
 	while (1)
 	{
+		char bufferMsg[8192];
+		int *sockmsg = (int *)args;
+		protocol::ServerMessage serverMsg;
+
+		int bytesReceived = recv(*sockmsg, bufferMsg, 8192, 0);
+
+		serverMsg.ParseFromString(bufferMsg);
+
+		if (serverMsg.option() == 2){
+			printf("________________________________________________________\n");
+			std::cout << "Error: "
+			  << serverMsg.error().errormessage()
+			  << std::endl;
+		}
+		if (serverMsg.option() == 3){
+			printf("________________________________________________________\n");
+			std::cout << "Notificacion: "
+			  << serverMsg.noti().notimessage()
+			  << std::endl;
+		}
 	}
 }
 
@@ -129,7 +149,7 @@ int main(int argc, char *argv[])
 
 	protocol::ServerMessage serverMessage;
 	serverMessage.ParseFromString(buffer);
-	if(serverMessage.option()==1){
+	if(serverMessage.option()==2){
 		std::cout << "Error: "
 			  << serverMessage.error().errormessage()
 			  << std::endl;
@@ -142,11 +162,11 @@ int main(int argc, char *argv[])
 	std::cout << serverMessage.rooms().rooms()<< std::endl;
 	//Elegir Room
 	printf("A que room se desea unir:\n");
-	std::string myroom;
-	std::cin >> myroom;
-	 if (myroom == "1" || myroom == "2")
+	int myroom;
+	myroom = get_client_option();
+	 if (myroom == 1 || myroom == 2)
 	 {
-		 if (serverMessage.rooms().roomsjoin().find(myroom) != std::string::npos)
+		 if (serverMessage.rooms().roomsjoin().find(std::to_string(myroom)) != std::string::npos)
 		 {
 			protocol::JoinRoom *join = new protocol::JoinRoom();
 			join->set_room(myroom);

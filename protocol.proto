@@ -18,13 +18,18 @@ message RoomsToJoin {
 
 // Send to SERVER
 message JoinRoom {
-  required string room = 1;
+  required int32 room = 1;
 }
 
 
 // ERROR GENERALIZADO
 message ErrorResponse {
   required string errorMessage = 1;
+}
+
+// NOTIFICACION GENERALIZADA
+message Notification {
+  required string notiMessage = 1;
 }
 
 // CLIENT GAME OPTIONS
@@ -43,9 +48,12 @@ message ClientMessage {
 // SERVER GAME OPTIONS
 // "option" helps the Client identify the type of response it is receiving and what to use to parse it
 // option 1: RoomsToJoin
+// option 2: ErrorResponse
+// option 3: Notification
 message ServerMessage {
   required int32 option = 1;
 
-  optional ErrorResponse error = 2;
-  optional RoomsToJoin rooms = 3;
+  optional RoomsToJoin rooms = 2;
+  optional ErrorResponse error = 3;
+  optional Notification noti = 4;
 }
