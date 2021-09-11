@@ -12,6 +12,7 @@ message ClientConnect {
 // Received from SERVER
 message RoomsToJoin {
   required string rooms = 1;
+  required string roomsJoin = 2;
 }
 
 // CLIENT GAME OPTIONS
@@ -31,7 +32,8 @@ message ClientMessage {
 message ServerMessage {
   required int32 option = 1;
 
-  optional RoomsToJoin rooms = 2;
+  optional ErrorResponse error = 2;
+  optional RoomsToJoin rooms = 3;
 }
 
 // ERROR GENERALIZADO

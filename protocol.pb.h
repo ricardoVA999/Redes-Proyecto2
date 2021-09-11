@@ -324,15 +324,36 @@ class RoomsToJoin : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_rooms();
   void set_allocated_rooms(::std::string* rooms);
 
+  // required string roomsJoin = 2;
+  bool has_roomsjoin() const;
+  void clear_roomsjoin();
+  static const int kRoomsJoinFieldNumber = 2;
+  const ::std::string& roomsjoin() const;
+  void set_roomsjoin(const ::std::string& value);
+  #if LANG_CXX11
+  void set_roomsjoin(::std::string&& value);
+  #endif
+  void set_roomsjoin(const char* value);
+  void set_roomsjoin(const char* value, size_t size);
+  ::std::string* mutable_roomsjoin();
+  ::std::string* release_roomsjoin();
+  void set_allocated_roomsjoin(::std::string* roomsjoin);
+
   // @@protoc_insertion_point(class_scope:protocol.RoomsToJoin)
  private:
   void set_has_rooms();
   void clear_has_rooms();
+  void set_has_roomsjoin();
+  void clear_has_roomsjoin();
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr rooms_;
+  ::google::protobuf::internal::ArenaStringPtr roomsjoin_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
@@ -570,10 +591,22 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // optional .protocol.RoomsToJoin rooms = 2;
+  // optional .protocol.ErrorResponse error = 2;
+  bool has_error() const;
+  void clear_error();
+  static const int kErrorFieldNumber = 2;
+  private:
+  const ::protocol::ErrorResponse& _internal_error() const;
+  public:
+  const ::protocol::ErrorResponse& error() const;
+  ::protocol::ErrorResponse* release_error();
+  ::protocol::ErrorResponse* mutable_error();
+  void set_allocated_error(::protocol::ErrorResponse* error);
+
+  // optional .protocol.RoomsToJoin rooms = 3;
   bool has_rooms() const;
   void clear_rooms();
-  static const int kRoomsFieldNumber = 2;
+  static const int kRoomsFieldNumber = 3;
   private:
   const ::protocol::RoomsToJoin& _internal_rooms() const;
   public:
@@ -593,12 +626,15 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
  private:
   void set_has_option();
   void clear_has_option();
+  void set_has_error();
+  void clear_has_error();
   void set_has_rooms();
   void clear_has_rooms();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::protocol::ErrorResponse* error_;
   ::protocol::RoomsToJoin* rooms_;
   ::google::protobuf::int32 option_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
@@ -938,6 +974,72 @@ inline void RoomsToJoin::set_allocated_rooms(::std::string* rooms) {
   // @@protoc_insertion_point(field_set_allocated:protocol.RoomsToJoin.rooms)
 }
 
+// required string roomsJoin = 2;
+inline bool RoomsToJoin::has_roomsjoin() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RoomsToJoin::set_has_roomsjoin() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RoomsToJoin::clear_has_roomsjoin() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RoomsToJoin::clear_roomsjoin() {
+  roomsjoin_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_roomsjoin();
+}
+inline const ::std::string& RoomsToJoin::roomsjoin() const {
+  // @@protoc_insertion_point(field_get:protocol.RoomsToJoin.roomsJoin)
+  return roomsjoin_.GetNoArena();
+}
+inline void RoomsToJoin::set_roomsjoin(const ::std::string& value) {
+  set_has_roomsjoin();
+  roomsjoin_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.RoomsToJoin.roomsJoin)
+}
+#if LANG_CXX11
+inline void RoomsToJoin::set_roomsjoin(::std::string&& value) {
+  set_has_roomsjoin();
+  roomsjoin_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.RoomsToJoin.roomsJoin)
+}
+#endif
+inline void RoomsToJoin::set_roomsjoin(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_roomsjoin();
+  roomsjoin_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.RoomsToJoin.roomsJoin)
+}
+inline void RoomsToJoin::set_roomsjoin(const char* value, size_t size) {
+  set_has_roomsjoin();
+  roomsjoin_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.RoomsToJoin.roomsJoin)
+}
+inline ::std::string* RoomsToJoin::mutable_roomsjoin() {
+  set_has_roomsjoin();
+  // @@protoc_insertion_point(field_mutable:protocol.RoomsToJoin.roomsJoin)
+  return roomsjoin_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RoomsToJoin::release_roomsjoin() {
+  // @@protoc_insertion_point(field_release:protocol.RoomsToJoin.roomsJoin)
+  if (!has_roomsjoin()) {
+    return NULL;
+  }
+  clear_has_roomsjoin();
+  return roomsjoin_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomsToJoin::set_allocated_roomsjoin(::std::string* roomsjoin) {
+  if (roomsjoin != NULL) {
+    set_has_roomsjoin();
+  } else {
+    clear_has_roomsjoin();
+  }
+  roomsjoin_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), roomsjoin);
+  // @@protoc_insertion_point(field_set_allocated:protocol.RoomsToJoin.roomsJoin)
+}
+
 // -------------------------------------------------------------------
 
 // ClientMessage
@@ -1054,13 +1156,13 @@ inline void ClientMessage::set_allocated_connect(::protocol::ClientConnect* conn
 
 // required int32 option = 1;
 inline bool ServerMessage::has_option() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void ServerMessage::set_has_option() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void ServerMessage::clear_has_option() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void ServerMessage::clear_option() {
   option_ = 0;
@@ -1076,15 +1178,73 @@ inline void ServerMessage::set_option(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:protocol.ServerMessage.option)
 }
 
-// optional .protocol.RoomsToJoin rooms = 2;
-inline bool ServerMessage::has_rooms() const {
+// optional .protocol.ErrorResponse error = 2;
+inline bool ServerMessage::has_error() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ServerMessage::set_has_rooms() {
+inline void ServerMessage::set_has_error() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ServerMessage::clear_has_rooms() {
+inline void ServerMessage::clear_has_error() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void ServerMessage::clear_error() {
+  if (error_ != NULL) error_->Clear();
+  clear_has_error();
+}
+inline const ::protocol::ErrorResponse& ServerMessage::_internal_error() const {
+  return *error_;
+}
+inline const ::protocol::ErrorResponse& ServerMessage::error() const {
+  const ::protocol::ErrorResponse* p = error_;
+  // @@protoc_insertion_point(field_get:protocol.ServerMessage.error)
+  return p != NULL ? *p : *reinterpret_cast<const ::protocol::ErrorResponse*>(
+      &::protocol::_ErrorResponse_default_instance_);
+}
+inline ::protocol::ErrorResponse* ServerMessage::release_error() {
+  // @@protoc_insertion_point(field_release:protocol.ServerMessage.error)
+  clear_has_error();
+  ::protocol::ErrorResponse* temp = error_;
+  error_ = NULL;
+  return temp;
+}
+inline ::protocol::ErrorResponse* ServerMessage::mutable_error() {
+  set_has_error();
+  if (error_ == NULL) {
+    auto* p = CreateMaybeMessage<::protocol::ErrorResponse>(GetArenaNoVirtual());
+    error_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ServerMessage.error)
+  return error_;
+}
+inline void ServerMessage::set_allocated_error(::protocol::ErrorResponse* error) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete error_;
+  }
+  if (error) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      error = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, error, submessage_arena);
+    }
+    set_has_error();
+  } else {
+    clear_has_error();
+  }
+  error_ = error;
+  // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.error)
+}
+
+// optional .protocol.RoomsToJoin rooms = 3;
+inline bool ServerMessage::has_rooms() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ServerMessage::set_has_rooms() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ServerMessage::clear_has_rooms() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void ServerMessage::clear_rooms() {
   if (rooms_ != NULL) rooms_->Clear();

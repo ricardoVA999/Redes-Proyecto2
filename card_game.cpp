@@ -13,7 +13,7 @@
 #include "protocol.pb.h"
 #include <queue>
 
-int connected, waitingForServerResponse, waitingForInput;
+int connected, waitingForServerResponse, waitingForInput, waitingForStart;
 
 void *get_in_addr(struct sockaddr *sa)
 {
@@ -23,6 +23,30 @@ void *get_in_addr(struct sockaddr *sa)
 	}
 
 	return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
+
+void *listenToMessages(void *args)
+{
+	while (1)
+	{
+	}
+}
+
+int get_client_option()
+{
+	// Client options
+	int client_opt;
+	std::cin >> client_opt;
+
+	while (std::cin.fail())
+	{
+		std::cout << "Por favor, ingrese una opcion valida: " << std::endl;
+		std::cin.clear();
+		std::cin.ignore(256, '\n');
+		std::cin >> client_opt;
+	}
+
+	return client_opt;
 }
 
 int main(int argc, char *argv[])
@@ -101,14 +125,43 @@ int main(int argc, char *argv[])
     strcpy(buffer, message_serialized.c_str());
 	send(sockfd, buffer, message_serialized.size() + 1, 0);
 
+	recv(sockfd, buffer, 8192, 0);
 
+	protocol::ServerMessage serverMessage;
+	serverMessage.ParseFromString(buffer);
+	if(serverMessage.option()==1){
+		std::cout << "Error: "
+			  << serverMessage.error().errormessage()
+			  << std::endl;
+			return 0;
+	}
 
-/* 	firstMessage->set_sender(uname);
-	firstMessage->set_flag(chat::Payload_PayloadFlag_register_);
-	firstMessage->set_ip(s);
+	connected = 1;
+	waitingForStart = 1;
+	printf("Rooms del servidor:\n");
+	std::cout << serverMessage.rooms().rooms()<< std::endl;
+	//Elegir Room
+	std::cout << serverMessage.rooms().roomsjoin()<< std::endl;
+	//Todo
 
-	firstMessage->SerializeToString(&message_serialized);
+	pthread_t thread_id;
+	pthread_attr_t attrs;
+	pthread_attr_init(&attrs);
+	pthread_create(&thread_id, &attrs, listenToMessages, (void *)&sockfd);
 
-	strcpy(buffer, message_serialized.c_str());
-	send(sockfd, buffer, message_serialized.size() + 1, 0); */
+	while (true)
+	{
+		printf("Opciones dentro del room:\n");
+		if (waitingForStart == 1){
+			printf("	1. Mandar mensaje\n");
+			int client_opt;
+			client_opt = get_client_option();
+			printf("%d\n", client_opt);
+		}
+		else{
+			return 0;
+		}
+	}
+
+	return 0;
 }

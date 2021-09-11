@@ -12,16 +12,43 @@
 #include <unordered_map>
 #include "protocol.pb.h"
 
+int randomfunc(int j)
+{
+    return rand() % j;
+}
 
 struct Client
 {
     int socketFd;
     std::string username;
     char ipAddr[INET_ADDRSTRLEN];
+    std::string room;
 };
+
+struct Room
+{
+    std::string roomNo;
+    std::vector<std::string> roomDeck;
+    std::vector<std::string> users;
+    int counter;
+};
+
 
 // Lista de clientes
 std::unordered_map<std::string, Client *> clients;
+Room RoomOne;
+Room RoomTwo;
+
+
+// Lista de cartas:
+std::vector<std::string> deck {
+    "A-D","2-D","3-D","4-D","5-D","6-D","7-D","8-D","9-D","10-D","J-D","Q-D","K-D",
+    "A-P","2-P","3-P","4-P","5-P","6-P","7-P","8-P","9-P","10-P","J-P","Q-P","K-P",
+    "A-C","2-C","3-C","4-C","5-C","6-C","7-C","8-C","9-C","10-C","J-C","Q-C","K-C",
+    "A-E","2-E","3-E","4-E","5-E","6-E","7-E","8-E","9-E","10-E","J-E","Q-E","K-E",
+    "Joker-Negro","Joker-Rojo"
+};
+
 
 // Funcion que manda errores
 void SendErrorResponse(int socketFd, std::string errorMsg)
@@ -29,8 +56,10 @@ void SendErrorResponse(int socketFd, std::string errorMsg)
     std::string msgSerialized;
     protocol::ErrorResponse *errorMessage = new protocol::ErrorResponse();
     errorMessage->set_errormessage(errorMsg);
-
-    errorMessage->SerializeToString(&msgSerialized);
+    protocol::ServerMessage serverMessage;
+    serverMessage.set_option(1);
+    serverMessage.set_allocated_error(errorMessage);
+    serverMessage.SerializeToString(&msgSerialized);
     char buffer[msgSerialized.size() + 1];
     strcpy(buffer, msgSerialized.c_str());
     send(socketFd, buffer, sizeof buffer, 0);
@@ -84,7 +113,34 @@ void *ThreadWork(void *params)
             }
 
             // Send available rooms
-            // TODO
+            std::string all_rooms = "";
+            std::string room_availabe = "";
+
+            all_rooms = all_rooms + "-Id: " + RoomOne.roomNo + " Espacios " + std::to_string(RoomOne.users.size()) + "/4\n";
+            all_rooms = all_rooms + "-Id: " + RoomTwo.roomNo + " Espacios " + std::to_string(RoomTwo.users.size()) + "/4\n";
+            if (RoomOne.users.size() < 4)
+            {
+                room_availabe = room_availabe+RoomOne.roomNo;
+            }
+            if (RoomTwo.users.size() < 4)
+            {
+                room_availabe = room_availabe+RoomTwo.roomNo;
+            }
+
+            // Escribir el mensaje de rooms
+            char buffer[8192];
+            std::string message_serialized;
+
+            protocol::RoomsToJoin *rooms = new protocol::RoomsToJoin();
+            rooms->set_rooms(all_rooms);
+            rooms->set_roomsjoin(room_availabe);
+
+            protocol::ServerMessage response;
+            response.set_option(2);
+            response.set_allocated_rooms(rooms);
+            response.SerializeToString(&message_serialized);
+            strcpy(buffer, message_serialized.c_str());
+            send(socketFd, buffer, message_serialized.size() + 1, 0);
 
 
             // Log del server
@@ -95,6 +151,7 @@ void *ThreadWork(void *params)
             // Guardar informacion de nuevo cliente
             thisClient.username = myInfo.username();
             thisClient.socketFd = socketFd;
+            thisClient.room = "0";
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
@@ -120,7 +177,7 @@ void *ThreadWork(void *params)
 int main(int argc, char *argv[])
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
-
+    srand(unsigned(time(0)));
     //Cuando no se indica el puerto del server
     if (argc != 2)
     {
@@ -162,6 +219,16 @@ int main(int argc, char *argv[])
         return 3;
     }
     printf("Servidor: escuchando en puerto %ld\n", port);
+
+    // Las dos rooms del server
+    std::random_shuffle(deck.begin(), deck.end(), randomfunc);
+    RoomOne.roomNo = "1";
+    RoomOne.roomDeck = deck;
+    RoomOne.counter = 0;
+    std::random_shuffle(deck.begin(), deck.end(), randomfunc);
+    RoomTwo.roomNo = "2";
+    RoomTwo.roomDeck = deck;
+    RoomTwo.counter = 0;
 
     while (1)
     {
