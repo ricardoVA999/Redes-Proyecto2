@@ -21,6 +21,12 @@ message JoinRoom {
   required int32 room = 1;
 }
 
+// ----- ENVIO DE MENSAJES A ROOMS
+
+// Send to SERVER
+message RoomMessage {
+  required string message = 1;
+}
 
 // ERROR GENERALIZADO
 message ErrorResponse {
@@ -36,13 +42,15 @@ message Notification {
 // "option" helps the Server identify the type of request it is receiving and what to use to parse it
 // option 1: ClientConnect
 // option 2: JoinRoom
+// option 3: RoomMessage
+// option 4: UsersInRoom
 message ClientMessage {
   required int32 option = 1;
-
   optional int32 userId = 2;
 
   optional ClientConnect connect = 3;
   optional JoinRoom roomJoin = 4;
+  optional RoomMessage msgRoom = 5;
 }
 
 // SERVER GAME OPTIONS

@@ -38,7 +38,7 @@ namespace protobuf_protocol_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[8];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -61,6 +61,9 @@ extern JoinRoomDefaultTypeInternal _JoinRoom_default_instance_;
 class Notification;
 class NotificationDefaultTypeInternal;
 extern NotificationDefaultTypeInternal _Notification_default_instance_;
+class RoomMessage;
+class RoomMessageDefaultTypeInternal;
+extern RoomMessageDefaultTypeInternal _RoomMessage_default_instance_;
 class RoomsToJoin;
 class RoomsToJoinDefaultTypeInternal;
 extern RoomsToJoinDefaultTypeInternal _RoomsToJoin_default_instance_;
@@ -75,6 +78,7 @@ template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::Clie
 template<> ::protocol::ErrorResponse* Arena::CreateMaybeMessage<::protocol::ErrorResponse>(Arena*);
 template<> ::protocol::JoinRoom* Arena::CreateMaybeMessage<::protocol::JoinRoom>(Arena*);
 template<> ::protocol::Notification* Arena::CreateMaybeMessage<::protocol::Notification>(Arena*);
+template<> ::protocol::RoomMessage* Arena::CreateMaybeMessage<::protocol::RoomMessage>(Arena*);
 template<> ::protocol::RoomsToJoin* Arena::CreateMaybeMessage<::protocol::RoomsToJoin>(Arena*);
 template<> ::protocol::ServerMessage* Arena::CreateMaybeMessage<::protocol::ServerMessage>(Arena*);
 }  // namespace protobuf
@@ -480,6 +484,128 @@ class JoinRoom : public ::google::protobuf::Message /* @@protoc_insertion_point(
 };
 // -------------------------------------------------------------------
 
+class RoomMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.RoomMessage) */ {
+ public:
+  RoomMessage();
+  virtual ~RoomMessage();
+
+  RoomMessage(const RoomMessage& from);
+
+  inline RoomMessage& operator=(const RoomMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  RoomMessage(RoomMessage&& from) noexcept
+    : RoomMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline RoomMessage& operator=(RoomMessage&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RoomMessage& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RoomMessage* internal_default_instance() {
+    return reinterpret_cast<const RoomMessage*>(
+               &_RoomMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(RoomMessage* other);
+  friend void swap(RoomMessage& a, RoomMessage& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RoomMessage* New() const final {
+    return CreateMaybeMessage<RoomMessage>(NULL);
+  }
+
+  RoomMessage* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<RoomMessage>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const RoomMessage& from);
+  void MergeFrom(const RoomMessage& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RoomMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string message = 1;
+  bool has_message() const;
+  void clear_message();
+  static const int kMessageFieldNumber = 1;
+  const ::std::string& message() const;
+  void set_message(const ::std::string& value);
+  #if LANG_CXX11
+  void set_message(::std::string&& value);
+  #endif
+  void set_message(const char* value);
+  void set_message(const char* value, size_t size);
+  ::std::string* mutable_message();
+  ::std::string* release_message();
+  void set_allocated_message(::std::string* message);
+
+  // @@protoc_insertion_point(class_scope:protocol.RoomMessage)
+ private:
+  void set_has_message();
+  void clear_has_message();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr message_;
+  friend struct ::protobuf_protocol_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ErrorResponse) */ {
  public:
   ErrorResponse();
@@ -522,7 +648,7 @@ class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ErrorResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(ErrorResponse* other);
   friend void swap(ErrorResponse& a, ErrorResponse& b) {
@@ -644,7 +770,7 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_Notification_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(Notification* other);
   friend void swap(Notification& a, Notification& b) {
@@ -766,7 +892,7 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(ClientMessage* other);
   friend void swap(ClientMessage& a, ClientMessage& b) {
@@ -842,6 +968,18 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::JoinRoom* mutable_roomjoin();
   void set_allocated_roomjoin(::protocol::JoinRoom* roomjoin);
 
+  // optional .protocol.RoomMessage msgRoom = 5;
+  bool has_msgroom() const;
+  void clear_msgroom();
+  static const int kMsgRoomFieldNumber = 5;
+  private:
+  const ::protocol::RoomMessage& _internal_msgroom() const;
+  public:
+  const ::protocol::RoomMessage& msgroom() const;
+  ::protocol::RoomMessage* release_msgroom();
+  ::protocol::RoomMessage* mutable_msgroom();
+  void set_allocated_msgroom(::protocol::RoomMessage* msgroom);
+
   // required int32 option = 1;
   bool has_option() const;
   void clear_option();
@@ -866,12 +1004,15 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   void clear_has_connect();
   void set_has_roomjoin();
   void clear_has_roomjoin();
+  void set_has_msgroom();
+  void clear_has_msgroom();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::protocol::ClientConnect* connect_;
   ::protocol::JoinRoom* roomjoin_;
+  ::protocol::RoomMessage* msgroom_;
   ::google::protobuf::int32 option_;
   ::google::protobuf::int32 userid_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
@@ -920,7 +1061,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ServerMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(ServerMessage* other);
   friend void swap(ServerMessage& a, ServerMessage& b) {
@@ -1344,6 +1485,76 @@ inline void JoinRoom::set_room(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
+// RoomMessage
+
+// required string message = 1;
+inline bool RoomMessage::has_message() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RoomMessage::set_has_message() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RoomMessage::clear_has_message() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RoomMessage::clear_message() {
+  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_message();
+}
+inline const ::std::string& RoomMessage::message() const {
+  // @@protoc_insertion_point(field_get:protocol.RoomMessage.message)
+  return message_.GetNoArena();
+}
+inline void RoomMessage::set_message(const ::std::string& value) {
+  set_has_message();
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.RoomMessage.message)
+}
+#if LANG_CXX11
+inline void RoomMessage::set_message(::std::string&& value) {
+  set_has_message();
+  message_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.RoomMessage.message)
+}
+#endif
+inline void RoomMessage::set_message(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_message();
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.RoomMessage.message)
+}
+inline void RoomMessage::set_message(const char* value, size_t size) {
+  set_has_message();
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.RoomMessage.message)
+}
+inline ::std::string* RoomMessage::mutable_message() {
+  set_has_message();
+  // @@protoc_insertion_point(field_mutable:protocol.RoomMessage.message)
+  return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RoomMessage::release_message() {
+  // @@protoc_insertion_point(field_release:protocol.RoomMessage.message)
+  if (!has_message()) {
+    return NULL;
+  }
+  clear_has_message();
+  return message_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomMessage::set_allocated_message(::std::string* message) {
+  if (message != NULL) {
+    set_has_message();
+  } else {
+    clear_has_message();
+  }
+  message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
+  // @@protoc_insertion_point(field_set_allocated:protocol.RoomMessage.message)
+}
+
+// -------------------------------------------------------------------
+
 // ErrorResponse
 
 // required string errorMessage = 1;
@@ -1488,13 +1699,13 @@ inline void Notification::set_allocated_notimessage(::std::string* notimessage) 
 
 // required int32 option = 1;
 inline bool ClientMessage::has_option() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void ClientMessage::set_has_option() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void ClientMessage::clear_has_option() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ClientMessage::clear_option() {
   option_ = 0;
@@ -1512,13 +1723,13 @@ inline void ClientMessage::set_option(::google::protobuf::int32 value) {
 
 // optional int32 userId = 2;
 inline bool ClientMessage::has_userid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void ClientMessage::set_has_userid() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void ClientMessage::clear_has_userid() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void ClientMessage::clear_userid() {
   userid_ = 0;
@@ -1648,6 +1859,64 @@ inline void ClientMessage::set_allocated_roomjoin(::protocol::JoinRoom* roomjoin
   }
   roomjoin_ = roomjoin;
   // @@protoc_insertion_point(field_set_allocated:protocol.ClientMessage.roomJoin)
+}
+
+// optional .protocol.RoomMessage msgRoom = 5;
+inline bool ClientMessage::has_msgroom() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ClientMessage::set_has_msgroom() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ClientMessage::clear_has_msgroom() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ClientMessage::clear_msgroom() {
+  if (msgroom_ != NULL) msgroom_->Clear();
+  clear_has_msgroom();
+}
+inline const ::protocol::RoomMessage& ClientMessage::_internal_msgroom() const {
+  return *msgroom_;
+}
+inline const ::protocol::RoomMessage& ClientMessage::msgroom() const {
+  const ::protocol::RoomMessage* p = msgroom_;
+  // @@protoc_insertion_point(field_get:protocol.ClientMessage.msgRoom)
+  return p != NULL ? *p : *reinterpret_cast<const ::protocol::RoomMessage*>(
+      &::protocol::_RoomMessage_default_instance_);
+}
+inline ::protocol::RoomMessage* ClientMessage::release_msgroom() {
+  // @@protoc_insertion_point(field_release:protocol.ClientMessage.msgRoom)
+  clear_has_msgroom();
+  ::protocol::RoomMessage* temp = msgroom_;
+  msgroom_ = NULL;
+  return temp;
+}
+inline ::protocol::RoomMessage* ClientMessage::mutable_msgroom() {
+  set_has_msgroom();
+  if (msgroom_ == NULL) {
+    auto* p = CreateMaybeMessage<::protocol::RoomMessage>(GetArenaNoVirtual());
+    msgroom_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClientMessage.msgRoom)
+  return msgroom_;
+}
+inline void ClientMessage::set_allocated_msgroom(::protocol::RoomMessage* msgroom) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete msgroom_;
+  }
+  if (msgroom) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      msgroom = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, msgroom, submessage_arena);
+    }
+    set_has_msgroom();
+  } else {
+    clear_has_msgroom();
+  }
+  msgroom_ = msgroom;
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClientMessage.msgRoom)
 }
 
 // -------------------------------------------------------------------
@@ -1855,6 +2124,8 @@ inline void ServerMessage::set_allocated_noti(::protocol::Notification* noti) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -24,6 +24,7 @@ extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::in
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_ErrorResponse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_JoinRoom;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Notification;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_RoomMessage;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_RoomsToJoin;
 }  // namespace protobuf_protocol_2eproto
 namespace protocol {
@@ -42,6 +43,11 @@ class JoinRoomDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<JoinRoom>
       _instance;
 } _JoinRoom_default_instance_;
+class RoomMessageDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<RoomMessage>
+      _instance;
+} _RoomMessage_default_instance_;
 class ErrorResponseDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<ErrorResponse>
@@ -106,6 +112,20 @@ static void InitDefaultsJoinRoom() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_JoinRoom =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsJoinRoom}, {}};
 
+static void InitDefaultsRoomMessage() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::protocol::_RoomMessage_default_instance_;
+    new (ptr) ::protocol::RoomMessage();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::protocol::RoomMessage::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_RoomMessage =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsRoomMessage}, {}};
+
 static void InitDefaultsErrorResponse() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -145,10 +165,11 @@ static void InitDefaultsClientMessage() {
   ::protocol::ClientMessage::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<2> scc_info_ClientMessage =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsClientMessage}, {
+::google::protobuf::internal::SCCInfo<3> scc_info_ClientMessage =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 3, InitDefaultsClientMessage}, {
       &protobuf_protocol_2eproto::scc_info_ClientConnect.base,
-      &protobuf_protocol_2eproto::scc_info_JoinRoom.base,}};
+      &protobuf_protocol_2eproto::scc_info_JoinRoom.base,
+      &protobuf_protocol_2eproto::scc_info_RoomMessage.base,}};
 
 static void InitDefaultsServerMessage() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -171,13 +192,14 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_ClientConnect.base);
   ::google::protobuf::internal::InitSCC(&scc_info_RoomsToJoin.base);
   ::google::protobuf::internal::InitSCC(&scc_info_JoinRoom.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_RoomMessage.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ErrorResponse.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Notification.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ClientMessage.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ServerMessage.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[7];
+::google::protobuf::Metadata file_level_metadata[8];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientConnect, _has_bits_),
@@ -205,6 +227,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::JoinRoom, room_),
   0,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::RoomMessage, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::RoomMessage, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::RoomMessage, message_),
+  0,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ErrorResponse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ErrorResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -228,10 +257,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, userid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, connect_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, roomjoin_),
-  2,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, msgroom_),
   3,
+  4,
   0,
   1,
+  2,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ServerMessage, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ServerMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -250,16 +281,18 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 0, 7, sizeof(::protocol::ClientConnect)},
   { 9, 16, sizeof(::protocol::RoomsToJoin)},
   { 18, 24, sizeof(::protocol::JoinRoom)},
-  { 25, 31, sizeof(::protocol::ErrorResponse)},
-  { 32, 38, sizeof(::protocol::Notification)},
-  { 39, 48, sizeof(::protocol::ClientMessage)},
-  { 52, 61, sizeof(::protocol::ServerMessage)},
+  { 25, 31, sizeof(::protocol::RoomMessage)},
+  { 32, 38, sizeof(::protocol::ErrorResponse)},
+  { 39, 45, sizeof(::protocol::Notification)},
+  { 46, 56, sizeof(::protocol::ClientMessage)},
+  { 61, 70, sizeof(::protocol::ServerMessage)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_ClientConnect_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_RoomsToJoin_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_JoinRoom_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_RoomMessage_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_ErrorResponse_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_Notification_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_ClientMessage_default_instance_),
@@ -281,7 +314,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 7);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 8);
 }
 
 void AddDescriptorsImpl() {
@@ -290,19 +323,21 @@ void AddDescriptorsImpl() {
       "\n\016protocol.proto\022\010protocol\"-\n\rClientConn"
       "ect\022\020\n\010username\030\001 \002(\t\022\n\n\002ip\030\002 \001(\t\"/\n\013Roo"
       "msToJoin\022\r\n\005rooms\030\001 \002(\t\022\021\n\troomsJoin\030\002 \002"
-      "(\t\"\030\n\010JoinRoom\022\014\n\004room\030\001 \002(\005\"%\n\rErrorRes"
-      "ponse\022\024\n\014errorMessage\030\001 \002(\t\"#\n\014Notificat"
-      "ion\022\023\n\013notiMessage\030\001 \002(\t\"\177\n\rClientMessag"
-      "e\022\016\n\006option\030\001 \002(\005\022\016\n\006userId\030\002 \001(\005\022(\n\007con"
-      "nect\030\003 \001(\0132\027.protocol.ClientConnect\022$\n\010r"
-      "oomJoin\030\004 \001(\0132\022.protocol.JoinRoom\"\223\001\n\rSe"
-      "rverMessage\022\016\n\006option\030\001 \002(\005\022$\n\005rooms\030\002 \001"
-      "(\0132\025.protocol.RoomsToJoin\022&\n\005error\030\003 \001(\013"
-      "2\027.protocol.ErrorResponse\022$\n\004noti\030\004 \001(\0132"
-      "\026.protocol.Notification"
+      "(\t\"\030\n\010JoinRoom\022\014\n\004room\030\001 \002(\005\"\036\n\013RoomMess"
+      "age\022\017\n\007message\030\001 \002(\t\"%\n\rErrorResponse\022\024\n"
+      "\014errorMessage\030\001 \002(\t\"#\n\014Notification\022\023\n\013n"
+      "otiMessage\030\001 \002(\t\"\247\001\n\rClientMessage\022\016\n\006op"
+      "tion\030\001 \002(\005\022\016\n\006userId\030\002 \001(\005\022(\n\007connect\030\003 "
+      "\001(\0132\027.protocol.ClientConnect\022$\n\010roomJoin"
+      "\030\004 \001(\0132\022.protocol.JoinRoom\022&\n\007msgRoom\030\005 "
+      "\001(\0132\025.protocol.RoomMessage\"\223\001\n\rServerMes"
+      "sage\022\016\n\006option\030\001 \002(\005\022$\n\005rooms\030\002 \001(\0132\025.pr"
+      "otocol.RoomsToJoin\022&\n\005error\030\003 \001(\0132\027.prot"
+      "ocol.ErrorResponse\022$\n\004noti\030\004 \001(\0132\026.proto"
+      "col.Notification"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 503);
+      descriptor, 576);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "protocol.proto", &protobuf_RegisterTypes);
 }
@@ -1201,6 +1236,256 @@ void JoinRoom::InternalSwap(JoinRoom* other) {
 
 // ===================================================================
 
+void RoomMessage::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int RoomMessage::kMessageFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+RoomMessage::RoomMessage()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_protocol_2eproto::scc_info_RoomMessage.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:protocol.RoomMessage)
+}
+RoomMessage::RoomMessage(const RoomMessage& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  message_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_message()) {
+    message_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_);
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.RoomMessage)
+}
+
+void RoomMessage::SharedCtor() {
+  message_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+RoomMessage::~RoomMessage() {
+  // @@protoc_insertion_point(destructor:protocol.RoomMessage)
+  SharedDtor();
+}
+
+void RoomMessage::SharedDtor() {
+  message_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void RoomMessage::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* RoomMessage::descriptor() {
+  ::protobuf_protocol_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_protocol_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const RoomMessage& RoomMessage::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_protocol_2eproto::scc_info_RoomMessage.base);
+  return *internal_default_instance();
+}
+
+
+void RoomMessage::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.RoomMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    message_.ClearNonDefaultToEmptyNoArena();
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool RoomMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:protocol.RoomMessage)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string message = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_message()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->message().data(), static_cast<int>(this->message().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "protocol.RoomMessage.message");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:protocol.RoomMessage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:protocol.RoomMessage)
+  return false;
+#undef DO_
+}
+
+void RoomMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:protocol.RoomMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string message = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->message().data(), static_cast<int>(this->message().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "protocol.RoomMessage.message");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->message(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:protocol.RoomMessage)
+}
+
+::google::protobuf::uint8* RoomMessage::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.RoomMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string message = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->message().data(), static_cast<int>(this->message().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "protocol.RoomMessage.message");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->message(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.RoomMessage)
+  return target;
+}
+
+size_t RoomMessage::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.RoomMessage)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required string message = 1;
+  if (has_message()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->message());
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void RoomMessage::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.RoomMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RoomMessage* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RoomMessage>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.RoomMessage)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.RoomMessage)
+    MergeFrom(*source);
+  }
+}
+
+void RoomMessage::MergeFrom(const RoomMessage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.RoomMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_message()) {
+    set_has_message();
+    message_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_);
+  }
+}
+
+void RoomMessage::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.RoomMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RoomMessage::CopyFrom(const RoomMessage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.RoomMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RoomMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void RoomMessage::Swap(RoomMessage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RoomMessage::InternalSwap(RoomMessage* other) {
+  using std::swap;
+  message_.Swap(&other->message_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata RoomMessage::GetMetadata() const {
+  protobuf_protocol_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_protocol_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void ErrorResponse::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -1706,12 +1991,15 @@ void ClientMessage::InitAsDefaultInstance() {
       ::protocol::ClientConnect::internal_default_instance());
   ::protocol::_ClientMessage_default_instance_._instance.get_mutable()->roomjoin_ = const_cast< ::protocol::JoinRoom*>(
       ::protocol::JoinRoom::internal_default_instance());
+  ::protocol::_ClientMessage_default_instance_._instance.get_mutable()->msgroom_ = const_cast< ::protocol::RoomMessage*>(
+      ::protocol::RoomMessage::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int ClientMessage::kOptionFieldNumber;
 const int ClientMessage::kUserIdFieldNumber;
 const int ClientMessage::kConnectFieldNumber;
 const int ClientMessage::kRoomJoinFieldNumber;
+const int ClientMessage::kMsgRoomFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ClientMessage::ClientMessage()
@@ -1736,6 +2024,11 @@ ClientMessage::ClientMessage(const ClientMessage& from)
   } else {
     roomjoin_ = NULL;
   }
+  if (from.has_msgroom()) {
+    msgroom_ = new ::protocol::RoomMessage(*from.msgroom_);
+  } else {
+    msgroom_ = NULL;
+  }
   ::memcpy(&option_, &from.option_,
     static_cast<size_t>(reinterpret_cast<char*>(&userid_) -
     reinterpret_cast<char*>(&option_)) + sizeof(userid_));
@@ -1756,6 +2049,7 @@ ClientMessage::~ClientMessage() {
 void ClientMessage::SharedDtor() {
   if (this != internal_default_instance()) delete connect_;
   if (this != internal_default_instance()) delete roomjoin_;
+  if (this != internal_default_instance()) delete msgroom_;
 }
 
 void ClientMessage::SetCachedSize(int size) const {
@@ -1779,7 +2073,7 @@ void ClientMessage::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(connect_ != NULL);
       connect_->Clear();
@@ -1788,8 +2082,12 @@ void ClientMessage::Clear() {
       GOOGLE_DCHECK(roomjoin_ != NULL);
       roomjoin_->Clear();
     }
+    if (cached_has_bits & 0x00000004u) {
+      GOOGLE_DCHECK(msgroom_ != NULL);
+      msgroom_->Clear();
+    }
   }
-  if (cached_has_bits & 12u) {
+  if (cached_has_bits & 24u) {
     ::memset(&option_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&userid_) -
         reinterpret_cast<char*>(&option_)) + sizeof(userid_));
@@ -1860,6 +2158,18 @@ bool ClientMessage::MergePartialFromCodedStream(
         break;
       }
 
+      // optional .protocol.RoomMessage msgRoom = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_msgroom()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1888,12 +2198,12 @@ void ClientMessage::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required int32 option = 1;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->option(), output);
   }
 
   // optional int32 userId = 2;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->userid(), output);
   }
 
@@ -1907,6 +2217,12 @@ void ClientMessage::SerializeWithCachedSizes(
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->_internal_roomjoin(), output);
+  }
+
+  // optional .protocol.RoomMessage msgRoom = 5;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->_internal_msgroom(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1925,12 +2241,12 @@ void ClientMessage::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required int32 option = 1;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->option(), target);
   }
 
   // optional int32 userId = 2;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->userid(), target);
   }
 
@@ -1946,6 +2262,13 @@ void ClientMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         4, this->_internal_roomjoin(), deterministic, target);
+  }
+
+  // optional .protocol.RoomMessage msgRoom = 5;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        5, this->_internal_msgroom(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1971,7 +2294,7 @@ size_t ClientMessage::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->option());
   }
-  if (_has_bits_[0 / 32] & 3u) {
+  if (_has_bits_[0 / 32] & 7u) {
     // optional .protocol.ClientConnect connect = 3;
     if (has_connect()) {
       total_size += 1 +
@@ -1984,6 +2307,13 @@ size_t ClientMessage::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *roomjoin_);
+    }
+
+    // optional .protocol.RoomMessage msgRoom = 5;
+    if (has_msgroom()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *msgroom_);
     }
 
   }
@@ -2022,7 +2352,7 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 15u) {
+  if (cached_has_bits & 31u) {
     if (cached_has_bits & 0x00000001u) {
       mutable_connect()->::protocol::ClientConnect::MergeFrom(from.connect());
     }
@@ -2030,9 +2360,12 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
       mutable_roomjoin()->::protocol::JoinRoom::MergeFrom(from.roomjoin());
     }
     if (cached_has_bits & 0x00000004u) {
-      option_ = from.option_;
+      mutable_msgroom()->::protocol::RoomMessage::MergeFrom(from.msgroom());
     }
     if (cached_has_bits & 0x00000008u) {
+      option_ = from.option_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       userid_ = from.userid_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -2054,12 +2387,15 @@ void ClientMessage::CopyFrom(const ClientMessage& from) {
 }
 
 bool ClientMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000004) != 0x00000004) return false;
+  if ((_has_bits_[0] & 0x00000008) != 0x00000008) return false;
   if (has_connect()) {
     if (!this->connect_->IsInitialized()) return false;
   }
   if (has_roomjoin()) {
     if (!this->roomjoin_->IsInitialized()) return false;
+  }
+  if (has_msgroom()) {
+    if (!this->msgroom_->IsInitialized()) return false;
   }
   return true;
 }
@@ -2072,6 +2408,7 @@ void ClientMessage::InternalSwap(ClientMessage* other) {
   using std::swap;
   swap(connect_, other->connect_);
   swap(roomjoin_, other->roomjoin_);
+  swap(msgroom_, other->msgroom_);
   swap(option_, other->option_);
   swap(userid_, other->userid_);
   swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2491,6 +2828,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::RoomsToJoin* Arena::Cr
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::JoinRoom* Arena::CreateMaybeMessage< ::protocol::JoinRoom >(Arena* arena) {
   return Arena::CreateInternal< ::protocol::JoinRoom >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::RoomMessage* Arena::CreateMaybeMessage< ::protocol::RoomMessage >(Arena* arena) {
+  return Arena::CreateInternal< ::protocol::RoomMessage >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::ErrorResponse* Arena::CreateMaybeMessage< ::protocol::ErrorResponse >(Arena* arena) {
   return Arena::CreateInternal< ::protocol::ErrorResponse >(arena);

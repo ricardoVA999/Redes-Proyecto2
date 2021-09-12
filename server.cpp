@@ -22,12 +22,12 @@ struct Client
     int socketFd;
     std::string username;
     char ipAddr[INET_ADDRSTRLEN];
-    std::string room;
+    int room;
 };
 
 struct Room
 {
-    std::string roomNo;
+    int roomNo;
     std::vector<std::string> roomDeck;
     std::vector<std::string> users;
     int counter;
@@ -119,10 +119,10 @@ void *ThreadWork(void *params)
 
             for (auto &it : allRooms)
             {
-                all_rooms = all_rooms + "-Id: " + it.roomNo + " Espacios " + std::to_string(it.users.size()) + "/4\n";
+                all_rooms = all_rooms + "-Id: " + std::to_string(it.roomNo) + " Espacios " + std::to_string(it.users.size()) + "/4\n";
                 if (it.users.size() < 4)
                 {
-                    room_availabe = room_availabe+it.roomNo;
+                    room_availabe = room_availabe+std::to_string(it.roomNo);
                 }
             }
 
@@ -150,7 +150,7 @@ void *ThreadWork(void *params)
             // Guardar informacion de nuevo cliente
             thisClient.username = myInfo.username();
             thisClient.socketFd = socketFd;
-            thisClient.room = "0";
+            thisClient.room = 0;
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
@@ -168,7 +168,7 @@ void *ThreadWork(void *params)
             char buffer[8192];
             std::string message_serialized;
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" Se ha conectado a la sala");
+            noti->set_notimessage("El usuario "+thisClient.username+" Se ha conectado a la sala. "+ std::to_string(allRooms[JoinRoom.room()-1].users.size()) + "/4");
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -184,6 +184,49 @@ void *ThreadWork(void *params)
             if (allRooms[JoinRoom.room()-1].users.size() == 4){
                 //Todo Start Game
             }
+        }
+        if (messageReceived.option() == 3)
+        {
+            // Mandar el mensaje a todos los participantes menos a si mismo
+            char buffer[8192];
+            std::string message_serialized;
+            
+            protocol::Notification *noti = new protocol::Notification();
+            noti->set_notimessage("El usuario "+thisClient.username+" Ha enviado un mensaje: "+ messageReceived.msgroom().message());
+
+            protocol::ServerMessage response;
+            response.set_option(3);
+            response.set_allocated_noti(noti);
+            response.SerializeToString(&message_serialized);
+            strcpy(buffer, message_serialized.c_str());
+
+            for (auto it = allRooms[thisClient.room-1].users.begin(); it != allRooms[thisClient.room-1].users.end(); ++it)
+                if (*it != thisClient.username){
+                    send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
+                }
+        }
+        if (messageReceived.option() == 4)
+        {
+            std::string list_to_sent = "";
+            
+            for (auto item = allRooms[thisClient.room-1].users.begin(); item != allRooms[thisClient.room-1].users.end(); ++item)
+            {
+                list_to_sent = list_to_sent + "Username: " + *item + "\n";
+            }
+
+            // Mandar lista de usuarios en mi room
+            char buffer[8192];
+            std::string message_serialized;
+            
+            protocol::Notification *noti = new protocol::Notification();
+            noti->set_notimessage(list_to_sent);
+
+            protocol::ServerMessage response;
+            response.set_option(3);
+            response.set_allocated_noti(noti);
+            response.SerializeToString(&message_serialized);
+            strcpy(buffer, message_serialized.c_str());
+            send(socketFd, buffer, message_serialized.size() + 1, 0);
         }
     }
     // Cuando el cliente se desconecta se elimina de la lista y se cierra su socket
@@ -257,7 +300,7 @@ int main(int argc, char *argv[])
     for (auto &it : allRooms) // access by reference to avoid copying
     {  
         std::random_shuffle(deck.begin(), deck.end(), randomfunc);
-        it.roomNo = std::to_string(roomNo);
+        it.roomNo = roomNo;
         it.roomDeck = deck;
         it.counter = 0;
         roomNo = roomNo+1;

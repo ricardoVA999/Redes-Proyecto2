@@ -42,12 +42,21 @@ void *listenToMessages(void *args)
 			std::cout << "Error: "
 			  << serverMsg.error().errormessage()
 			  << std::endl;
+			printf("________________________________________________________\n");
 		}
 		if (serverMsg.option() == 3){
 			printf("________________________________________________________\n");
-			std::cout << "Notificacion: "
+			std::cout << "Notificacion:\n"
 			  << serverMsg.noti().notimessage()
 			  << std::endl;
+			printf("________________________________________________________\n");
+		}
+
+		waitingForServerResponse = 0;
+
+		if (connected == 0)
+		{
+			pthread_exit(0);
 		}
 	}
 }
@@ -196,17 +205,50 @@ int main(int argc, char *argv[])
 
 	while (true)
 	{
+		while (waitingForServerResponse == 1){}
 		printf("Opciones dentro del room:\n");
 		if (waitingForStart == 1){
+			printf("Esperado a que se unan mas jugadores...\n");
 			printf("	1. Mandar mensaje\n");
+			printf("	2. Ver usuarios en la sala\n");
 			int client_opt;
 			client_opt = get_client_option();
-			printf("%d\n", client_opt);
+			if (client_opt == 1)
+			{
+				printf("Mensaje que desea mandar a la sala:\n");
+				std::cin.ignore();
+				std::string msg;
+				std::getline(std::cin, msg);
+
+				protocol::RoomMessage *roomMsg = new protocol::RoomMessage();
+				roomMsg->set_message(msg);
+			
+				protocol::ClientMessage roomMessage;
+				roomMessage.set_option(3);
+				roomMessage.set_allocated_msgroom(roomMsg);
+				roomMessage.SerializeToString(&message_serialized);
+				strcpy(buffer, message_serialized.c_str());
+				send(sockfd, buffer, message_serialized.size() + 1, 0);
+				printf("Mensaje enviado\n");
+			}
+			if (client_opt == 2) {
+				protocol::ClientMessage listMsg;
+				listMsg.set_option(4);
+				listMsg.SerializeToString(&message_serialized);
+				strcpy(buffer, message_serialized.c_str());
+				send(sockfd, buffer, message_serialized.size() + 1, 0);
+				waitingForServerResponse = 1;
+			}
+			else
+			{
+				printf("Dicha opcion no existe.");
+			}
 		}
 		else{
 			printf("	1. Mandar mensaje\n");
 			printf("	2. Ver cartas\n");
 			printf("	3. Ganar con 3 iguales\n");
+			printf("	4. Ver usuarios en la sala\n");
 			int client_opt;
 			client_opt = get_client_option();
 			printf("%d\n", client_opt);
