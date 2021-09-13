@@ -23,6 +23,7 @@ struct Client
     std::string username;
     char ipAddr[INET_ADDRSTRLEN];
     int room;
+    int lives;
 };
 
 struct Room
@@ -151,6 +152,7 @@ void *ThreadWork(void *params)
             thisClient.username = myInfo.username();
             thisClient.socketFd = socketFd;
             thisClient.room = 0;
+            thisClient.lives = 3;
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
@@ -176,13 +178,32 @@ void *ThreadWork(void *params)
             response.SerializeToString(&message_serialized);
             strcpy(buffer, message_serialized.c_str());
 
-            for (auto it = allRooms[JoinRoom.room()-1].users.begin(); it != allRooms[JoinRoom.room()-1].users.end(); ++it)
+            for (auto it = allRooms[JoinRoom.room()-1].users.begin(); it != allRooms[JoinRoom.room()-1].users.end(); ++it){
                 if (*it != thisClient.username){
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
+            }
 
             if (allRooms[JoinRoom.room()-1].users.size() == 4){
-                //Todo Start Game
+                for (auto it = allRooms[JoinRoom.room()-1].users.begin(); it != allRooms[JoinRoom.room()-1].users.end(); ++it){
+
+                    std::string user_cards = "";
+                    for (int i = 0; i < 3; ++i){
+                        user_cards = user_cards + allRooms[JoinRoom.room()-1].roomDeck.front()+',';
+                        allRooms[JoinRoom.room()-1].roomDeck.erase(allRooms[JoinRoom.room()-1].roomDeck.begin());
+                    }
+                    protocol::MatchStart *start = new protocol::MatchStart();
+                    start->set_cards(user_cards);
+
+                    protocol::ServerMessage response;
+                    response.set_option(4);
+                    response.set_allocated_start(start);
+                    response.SerializeToString(&message_serialized);
+                    strcpy(buffer, message_serialized.c_str());
+                    send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
+                }
+
+                // Todo mandar primer turno
             }
         }
         if (messageReceived.option() == 3)

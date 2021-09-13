@@ -38,7 +38,7 @@ namespace protobuf_protocol_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[8];
+  static const ::google::protobuf::internal::ParseTable schema[9];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -58,6 +58,9 @@ extern ErrorResponseDefaultTypeInternal _ErrorResponse_default_instance_;
 class JoinRoom;
 class JoinRoomDefaultTypeInternal;
 extern JoinRoomDefaultTypeInternal _JoinRoom_default_instance_;
+class MatchStart;
+class MatchStartDefaultTypeInternal;
+extern MatchStartDefaultTypeInternal _MatchStart_default_instance_;
 class Notification;
 class NotificationDefaultTypeInternal;
 extern NotificationDefaultTypeInternal _Notification_default_instance_;
@@ -77,6 +80,7 @@ template<> ::protocol::ClientConnect* Arena::CreateMaybeMessage<::protocol::Clie
 template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::ClientMessage>(Arena*);
 template<> ::protocol::ErrorResponse* Arena::CreateMaybeMessage<::protocol::ErrorResponse>(Arena*);
 template<> ::protocol::JoinRoom* Arena::CreateMaybeMessage<::protocol::JoinRoom>(Arena*);
+template<> ::protocol::MatchStart* Arena::CreateMaybeMessage<::protocol::MatchStart>(Arena*);
 template<> ::protocol::Notification* Arena::CreateMaybeMessage<::protocol::Notification>(Arena*);
 template<> ::protocol::RoomMessage* Arena::CreateMaybeMessage<::protocol::RoomMessage>(Arena*);
 template<> ::protocol::RoomsToJoin* Arena::CreateMaybeMessage<::protocol::RoomsToJoin>(Arena*);
@@ -606,6 +610,128 @@ class RoomMessage : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
+class MatchStart : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.MatchStart) */ {
+ public:
+  MatchStart();
+  virtual ~MatchStart();
+
+  MatchStart(const MatchStart& from);
+
+  inline MatchStart& operator=(const MatchStart& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MatchStart(MatchStart&& from) noexcept
+    : MatchStart() {
+    *this = ::std::move(from);
+  }
+
+  inline MatchStart& operator=(MatchStart&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MatchStart& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MatchStart* internal_default_instance() {
+    return reinterpret_cast<const MatchStart*>(
+               &_MatchStart_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  void Swap(MatchStart* other);
+  friend void swap(MatchStart& a, MatchStart& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MatchStart* New() const final {
+    return CreateMaybeMessage<MatchStart>(NULL);
+  }
+
+  MatchStart* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MatchStart>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MatchStart& from);
+  void MergeFrom(const MatchStart& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MatchStart* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string cards = 1;
+  bool has_cards() const;
+  void clear_cards();
+  static const int kCardsFieldNumber = 1;
+  const ::std::string& cards() const;
+  void set_cards(const ::std::string& value);
+  #if LANG_CXX11
+  void set_cards(::std::string&& value);
+  #endif
+  void set_cards(const char* value);
+  void set_cards(const char* value, size_t size);
+  ::std::string* mutable_cards();
+  ::std::string* release_cards();
+  void set_allocated_cards(::std::string* cards);
+
+  // @@protoc_insertion_point(class_scope:protocol.MatchStart)
+ private:
+  void set_has_cards();
+  void clear_has_cards();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr cards_;
+  friend struct ::protobuf_protocol_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ErrorResponse) */ {
  public:
   ErrorResponse();
@@ -648,7 +774,7 @@ class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ErrorResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(ErrorResponse* other);
   friend void swap(ErrorResponse& a, ErrorResponse& b) {
@@ -770,7 +896,7 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_Notification_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(Notification* other);
   friend void swap(Notification& a, Notification& b) {
@@ -892,7 +1018,7 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(ClientMessage* other);
   friend void swap(ClientMessage& a, ClientMessage& b) {
@@ -1061,7 +1187,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ServerMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(ServerMessage* other);
   friend void swap(ServerMessage& a, ServerMessage& b) {
@@ -1149,6 +1275,18 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::Notification* mutable_noti();
   void set_allocated_noti(::protocol::Notification* noti);
 
+  // optional .protocol.MatchStart start = 5;
+  bool has_start() const;
+  void clear_start();
+  static const int kStartFieldNumber = 5;
+  private:
+  const ::protocol::MatchStart& _internal_start() const;
+  public:
+  const ::protocol::MatchStart& start() const;
+  ::protocol::MatchStart* release_start();
+  ::protocol::MatchStart* mutable_start();
+  void set_allocated_start(::protocol::MatchStart* start);
+
   // required int32 option = 1;
   bool has_option() const;
   void clear_option();
@@ -1166,6 +1304,8 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   void clear_has_error();
   void set_has_noti();
   void clear_has_noti();
+  void set_has_start();
+  void clear_has_start();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
@@ -1173,6 +1313,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::RoomsToJoin* rooms_;
   ::protocol::ErrorResponse* error_;
   ::protocol::Notification* noti_;
+  ::protocol::MatchStart* start_;
   ::google::protobuf::int32 option_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
 };
@@ -1555,6 +1696,76 @@ inline void RoomMessage::set_allocated_message(::std::string* message) {
 
 // -------------------------------------------------------------------
 
+// MatchStart
+
+// required string cards = 1;
+inline bool MatchStart::has_cards() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MatchStart::set_has_cards() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MatchStart::clear_has_cards() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MatchStart::clear_cards() {
+  cards_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_cards();
+}
+inline const ::std::string& MatchStart::cards() const {
+  // @@protoc_insertion_point(field_get:protocol.MatchStart.cards)
+  return cards_.GetNoArena();
+}
+inline void MatchStart::set_cards(const ::std::string& value) {
+  set_has_cards();
+  cards_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.MatchStart.cards)
+}
+#if LANG_CXX11
+inline void MatchStart::set_cards(::std::string&& value) {
+  set_has_cards();
+  cards_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.MatchStart.cards)
+}
+#endif
+inline void MatchStart::set_cards(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_cards();
+  cards_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.MatchStart.cards)
+}
+inline void MatchStart::set_cards(const char* value, size_t size) {
+  set_has_cards();
+  cards_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.MatchStart.cards)
+}
+inline ::std::string* MatchStart::mutable_cards() {
+  set_has_cards();
+  // @@protoc_insertion_point(field_mutable:protocol.MatchStart.cards)
+  return cards_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MatchStart::release_cards() {
+  // @@protoc_insertion_point(field_release:protocol.MatchStart.cards)
+  if (!has_cards()) {
+    return NULL;
+  }
+  clear_has_cards();
+  return cards_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MatchStart::set_allocated_cards(::std::string* cards) {
+  if (cards != NULL) {
+    set_has_cards();
+  } else {
+    clear_has_cards();
+  }
+  cards_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cards);
+  // @@protoc_insertion_point(field_set_allocated:protocol.MatchStart.cards)
+}
+
+// -------------------------------------------------------------------
+
 // ErrorResponse
 
 // required string errorMessage = 1;
@@ -1925,13 +2136,13 @@ inline void ClientMessage::set_allocated_msgroom(::protocol::RoomMessage* msgroo
 
 // required int32 option = 1;
 inline bool ServerMessage::has_option() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void ServerMessage::set_has_option() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void ServerMessage::clear_has_option() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void ServerMessage::clear_option() {
   option_ = 0;
@@ -2121,9 +2332,69 @@ inline void ServerMessage::set_allocated_noti(::protocol::Notification* noti) {
   // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.noti)
 }
 
+// optional .protocol.MatchStart start = 5;
+inline bool ServerMessage::has_start() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void ServerMessage::set_has_start() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void ServerMessage::clear_has_start() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void ServerMessage::clear_start() {
+  if (start_ != NULL) start_->Clear();
+  clear_has_start();
+}
+inline const ::protocol::MatchStart& ServerMessage::_internal_start() const {
+  return *start_;
+}
+inline const ::protocol::MatchStart& ServerMessage::start() const {
+  const ::protocol::MatchStart* p = start_;
+  // @@protoc_insertion_point(field_get:protocol.ServerMessage.start)
+  return p != NULL ? *p : *reinterpret_cast<const ::protocol::MatchStart*>(
+      &::protocol::_MatchStart_default_instance_);
+}
+inline ::protocol::MatchStart* ServerMessage::release_start() {
+  // @@protoc_insertion_point(field_release:protocol.ServerMessage.start)
+  clear_has_start();
+  ::protocol::MatchStart* temp = start_;
+  start_ = NULL;
+  return temp;
+}
+inline ::protocol::MatchStart* ServerMessage::mutable_start() {
+  set_has_start();
+  if (start_ == NULL) {
+    auto* p = CreateMaybeMessage<::protocol::MatchStart>(GetArenaNoVirtual());
+    start_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ServerMessage.start)
+  return start_;
+}
+inline void ServerMessage::set_allocated_start(::protocol::MatchStart* start) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete start_;
+  }
+  if (start) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      start = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, start, submessage_arena);
+    }
+    set_has_start();
+  } else {
+    clear_has_start();
+  }
+  start_ = start;
+  // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.start)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

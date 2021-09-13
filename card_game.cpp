@@ -13,7 +13,8 @@
 #include "protocol.pb.h"
 #include <queue>
 
-int connected, waitingForServerResponse, waitingForInput, waitingForStart;
+int connected, waitingForServerResponse, waitingForInput, waitingForStart, lives;
+std::vector<std::string> myCards;
 
 void *get_in_addr(struct sockaddr *sa)
 {
@@ -51,6 +52,26 @@ void *listenToMessages(void *args)
 			  << std::endl;
 			printf("________________________________________________________\n");
 		}
+		if (serverMsg.option() == 4){
+			printf("___________________El juego ha comenzado___________________\n");
+			printf("Sus primeras cartas son:\n");
+			waitingForStart = 0;
+			std::string cards = serverMsg.start().cards();
+			std::string delimiter = ",";
+
+			size_t pos = 0;
+			std::string token;
+			while ((pos = cards.find(delimiter)) != std::string::npos) {
+				token = cards.substr(0, pos);
+				myCards.insert(myCards.end(),token);
+				cards.erase(0, pos + delimiter.length());
+			}
+			for (auto it = myCards.begin(); it != myCards.end(); ++it)
+        		std::cout << *it <<", ";
+				printf("\n");
+			
+			printf("Esperando turno... Recarge menu - 0\n");
+		}
 
 		waitingForServerResponse = 0;
 
@@ -80,6 +101,7 @@ int get_client_option()
 
 int main(int argc, char *argv[])
 {
+	lives = 3;
     // Estructura de la coneccion
 	int sockfd, numbytes;
 	char buf[8192];
@@ -211,6 +233,7 @@ int main(int argc, char *argv[])
 			printf("Esperado a que se unan mas jugadores...\n");
 			printf("	1. Mandar mensaje\n");
 			printf("	2. Ver usuarios en la sala\n");
+			printf("	0. Recargar Menu\n");
 			int client_opt;
 			client_opt = get_client_option();
 			if (client_opt == 1)
@@ -231,7 +254,7 @@ int main(int argc, char *argv[])
 				send(sockfd, buffer, message_serialized.size() + 1, 0);
 				printf("Mensaje enviado\n");
 			}
-			if (client_opt == 2) {
+			else if (client_opt == 2) {
 				protocol::ClientMessage listMsg;
 				listMsg.set_option(4);
 				listMsg.SerializeToString(&message_serialized);
@@ -239,6 +262,7 @@ int main(int argc, char *argv[])
 				send(sockfd, buffer, message_serialized.size() + 1, 0);
 				waitingForServerResponse = 1;
 			}
+			if (client_opt == 0){}
 			else
 			{
 				printf("Dicha opcion no existe.");
@@ -249,9 +273,53 @@ int main(int argc, char *argv[])
 			printf("	2. Ver cartas\n");
 			printf("	3. Ganar con 3 iguales\n");
 			printf("	4. Ver usuarios en la sala\n");
+			printf("	5. Ver cantidad de vidas\n");
 			int client_opt;
 			client_opt = get_client_option();
-			printf("%d\n", client_opt);
+			if (client_opt == 1)
+			{
+				printf("Mensaje que desea mandar a la sala:\n");
+				std::cin.ignore();
+				std::string msg;
+				std::getline(std::cin, msg);
+
+				protocol::RoomMessage *roomMsg = new protocol::RoomMessage();
+				roomMsg->set_message(msg);
+			
+				protocol::ClientMessage roomMessage;
+				roomMessage.set_option(3);
+				roomMessage.set_allocated_msgroom(roomMsg);
+				roomMessage.SerializeToString(&message_serialized);
+				strcpy(buffer, message_serialized.c_str());
+				send(sockfd, buffer, message_serialized.size() + 1, 0);
+				printf("Mensaje enviado\n");
+			}
+			else if (client_opt == 2){
+				printf("Sus cartas actuales son:\n");
+				for (auto it = myCards.begin(); it != myCards.end(); ++it)
+        			std::cout << *it << ", ";
+					printf("\n");
+
+			}
+			else if (client_opt == 3){
+
+			}
+			else if (client_opt == 4) {
+				protocol::ClientMessage listMsg;
+				listMsg.set_option(4);
+				listMsg.SerializeToString(&message_serialized);
+				strcpy(buffer, message_serialized.c_str());
+				send(sockfd, buffer, message_serialized.size() + 1, 0);
+				waitingForServerResponse = 1;
+			}
+			else if (client_opt == 5){
+				printf("- Actualmente cuenta con %d vidas\n", lives);
+
+			}
+			else
+			{
+				printf("Dicha opcion no existe.\n");
+			}
 		}
 	}
 

@@ -21,11 +21,16 @@ message JoinRoom {
   required int32 room = 1;
 }
 
-// ----- ENVIO DE MENSAJES A ROOMS
+// ----- ENVIO DE MENSAJES A ROOMS -----
 
 // Send to SERVER
 message RoomMessage {
   required string message = 1;
+}
+
+// ----- INICIO DE PARTIDA -----
+message MatchStart {
+  required string cards = 1;
 }
 
 // ERROR GENERALIZADO
@@ -58,10 +63,12 @@ message ClientMessage {
 // option 1: RoomsToJoin
 // option 2: ErrorResponse
 // option 3: Notification
+// option 4: MatchStart
 message ServerMessage {
   required int32 option = 1;
 
   optional RoomsToJoin rooms = 2;
   optional ErrorResponse error = 3;
   optional Notification noti = 4;
+  optional MatchStart start = 5;
 }
