@@ -13,7 +13,9 @@
 #include "protocol.pb.h"
 #include <queue>
 
-int connected, waitingForServerResponse, waitingForInput, waitingForStart, lives;
+
+int connected, waitingForServerResponse, waitingForStart, lives, myTurn, roomCounter;
+std::string newCard;
 std::vector<std::string> myCards;
 
 void *get_in_addr(struct sockaddr *sa)
@@ -45,14 +47,14 @@ void *listenToMessages(void *args)
 			  << std::endl;
 			printf("________________________________________________________\n");
 		}
-		if (serverMsg.option() == 3){
+		else if (serverMsg.option() == 3){
 			printf("________________________________________________________\n");
 			std::cout << "Notificacion:\n"
 			  << serverMsg.noti().notimessage()
 			  << std::endl;
 			printf("________________________________________________________\n");
 		}
-		if (serverMsg.option() == 4){
+		else if (serverMsg.option() == 4){
 			printf("___________________El juego ha comenzado___________________\n");
 			printf("Sus primeras cartas son:\n");
 			waitingForStart = 0;
@@ -71,6 +73,16 @@ void *listenToMessages(void *args)
 				printf("\n");
 			
 			printf("Esperando turno... Recarge menu - 0\n");
+		}
+		else if (serverMsg.option() == 5){
+			printf("___________________Es su turno___________________\n");
+			myTurn = 1;
+			protocol::NewTurn income = serverMsg.turn();
+			newCard = income.newcard();
+			roomCounter = income.roomcounter();
+			std::cout << "Contador acutal de la partida: "<<roomCounter<<std::endl;
+			printf("Que accion desea realizar... Recarge menu - 0\n");
+			
 		}
 
 		waitingForServerResponse = 0;
@@ -102,6 +114,7 @@ int get_client_option()
 int main(int argc, char *argv[])
 {
 	lives = 3;
+	newCard = "";
     // Estructura de la coneccion
 	int sockfd, numbytes;
 	char buf[8192];
@@ -208,6 +221,8 @@ int main(int argc, char *argv[])
 			roomMessage.SerializeToString(&message_serialized);
 			strcpy(buffer, message_serialized.c_str());
 			send(sockfd, buffer, message_serialized.size() + 1, 0);
+			roomCounter = 0;
+			myTurn = 0;
 		 }
 		 else
 		 {

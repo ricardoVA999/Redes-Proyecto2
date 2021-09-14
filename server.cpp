@@ -11,6 +11,8 @@
 #include <arpa/inet.h>
 #include <unordered_map>
 #include "protocol.pb.h"
+#include <chrono>
+#include <thread>
 
 int randomfunc(int j)
 {
@@ -203,7 +205,25 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
 
-                // Todo mandar primer turno
+                std::chrono::seconds dura(3);
+                std::this_thread::sleep_for( dura );
+                // Mandar primer turno
+                char buffer[8192];
+                std::string message_serialized;
+                protocol::NewTurn *turn = new protocol::NewTurn;
+
+                std::string newCard = "";
+                newCard = newCard +""+allRooms[JoinRoom.room()-1].roomDeck.front();
+                allRooms[JoinRoom.room()-1].roomDeck.erase(allRooms[JoinRoom.room()-1].roomDeck.begin());
+                turn->set_newcard(newCard);
+                turn->set_roomcounter(allRooms[JoinRoom.room()-1].counter);
+
+                protocol::ServerMessage response;
+                response.set_option(5);
+                response.set_allocated_turn(turn);
+                response.SerializeToString(&message_serialized);
+                strcpy(buffer, message_serialized.c_str());
+                send(clients[allRooms[thisClient.room-1].users.front()]->socketFd, buffer, message_serialized.size() + 1, 0);
             }
         }
         if (messageReceived.option() == 3)

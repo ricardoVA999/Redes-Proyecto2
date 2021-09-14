@@ -38,7 +38,7 @@ namespace protobuf_protocol_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[9];
+  static const ::google::protobuf::internal::ParseTable schema[10];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -61,6 +61,9 @@ extern JoinRoomDefaultTypeInternal _JoinRoom_default_instance_;
 class MatchStart;
 class MatchStartDefaultTypeInternal;
 extern MatchStartDefaultTypeInternal _MatchStart_default_instance_;
+class NewTurn;
+class NewTurnDefaultTypeInternal;
+extern NewTurnDefaultTypeInternal _NewTurn_default_instance_;
 class Notification;
 class NotificationDefaultTypeInternal;
 extern NotificationDefaultTypeInternal _Notification_default_instance_;
@@ -81,6 +84,7 @@ template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::Clie
 template<> ::protocol::ErrorResponse* Arena::CreateMaybeMessage<::protocol::ErrorResponse>(Arena*);
 template<> ::protocol::JoinRoom* Arena::CreateMaybeMessage<::protocol::JoinRoom>(Arena*);
 template<> ::protocol::MatchStart* Arena::CreateMaybeMessage<::protocol::MatchStart>(Arena*);
+template<> ::protocol::NewTurn* Arena::CreateMaybeMessage<::protocol::NewTurn>(Arena*);
 template<> ::protocol::Notification* Arena::CreateMaybeMessage<::protocol::Notification>(Arena*);
 template<> ::protocol::RoomMessage* Arena::CreateMaybeMessage<::protocol::RoomMessage>(Arena*);
 template<> ::protocol::RoomsToJoin* Arena::CreateMaybeMessage<::protocol::RoomsToJoin>(Arena*);
@@ -732,6 +736,138 @@ class MatchStart : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
+class NewTurn : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.NewTurn) */ {
+ public:
+  NewTurn();
+  virtual ~NewTurn();
+
+  NewTurn(const NewTurn& from);
+
+  inline NewTurn& operator=(const NewTurn& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NewTurn(NewTurn&& from) noexcept
+    : NewTurn() {
+    *this = ::std::move(from);
+  }
+
+  inline NewTurn& operator=(NewTurn&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NewTurn& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NewTurn* internal_default_instance() {
+    return reinterpret_cast<const NewTurn*>(
+               &_NewTurn_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  void Swap(NewTurn* other);
+  friend void swap(NewTurn& a, NewTurn& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NewTurn* New() const final {
+    return CreateMaybeMessage<NewTurn>(NULL);
+  }
+
+  NewTurn* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NewTurn>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NewTurn& from);
+  void MergeFrom(const NewTurn& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NewTurn* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string newCard = 1;
+  bool has_newcard() const;
+  void clear_newcard();
+  static const int kNewCardFieldNumber = 1;
+  const ::std::string& newcard() const;
+  void set_newcard(const ::std::string& value);
+  #if LANG_CXX11
+  void set_newcard(::std::string&& value);
+  #endif
+  void set_newcard(const char* value);
+  void set_newcard(const char* value, size_t size);
+  ::std::string* mutable_newcard();
+  ::std::string* release_newcard();
+  void set_allocated_newcard(::std::string* newcard);
+
+  // optional int32 roomCounter = 2;
+  bool has_roomcounter() const;
+  void clear_roomcounter();
+  static const int kRoomCounterFieldNumber = 2;
+  ::google::protobuf::int32 roomcounter() const;
+  void set_roomcounter(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:protocol.NewTurn)
+ private:
+  void set_has_newcard();
+  void clear_has_newcard();
+  void set_has_roomcounter();
+  void clear_has_roomcounter();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr newcard_;
+  ::google::protobuf::int32 roomcounter_;
+  friend struct ::protobuf_protocol_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ErrorResponse) */ {
  public:
   ErrorResponse();
@@ -774,7 +910,7 @@ class ErrorResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ErrorResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(ErrorResponse* other);
   friend void swap(ErrorResponse& a, ErrorResponse& b) {
@@ -896,7 +1032,7 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_Notification_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(Notification* other);
   friend void swap(Notification& a, Notification& b) {
@@ -1018,7 +1154,7 @@ class ClientMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(ClientMessage* other);
   friend void swap(ClientMessage& a, ClientMessage& b) {
@@ -1187,7 +1323,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_ServerMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   void Swap(ServerMessage* other);
   friend void swap(ServerMessage& a, ServerMessage& b) {
@@ -1287,6 +1423,18 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::MatchStart* mutable_start();
   void set_allocated_start(::protocol::MatchStart* start);
 
+  // optional .protocol.NewTurn turn = 6;
+  bool has_turn() const;
+  void clear_turn();
+  static const int kTurnFieldNumber = 6;
+  private:
+  const ::protocol::NewTurn& _internal_turn() const;
+  public:
+  const ::protocol::NewTurn& turn() const;
+  ::protocol::NewTurn* release_turn();
+  ::protocol::NewTurn* mutable_turn();
+  void set_allocated_turn(::protocol::NewTurn* turn);
+
   // required int32 option = 1;
   bool has_option() const;
   void clear_option();
@@ -1306,6 +1454,8 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   void clear_has_noti();
   void set_has_start();
   void clear_has_start();
+  void set_has_turn();
+  void clear_has_turn();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
@@ -1314,6 +1464,7 @@ class ServerMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::protocol::ErrorResponse* error_;
   ::protocol::Notification* noti_;
   ::protocol::MatchStart* start_;
+  ::protocol::NewTurn* turn_;
   ::google::protobuf::int32 option_;
   friend struct ::protobuf_protocol_2eproto::TableStruct;
 };
@@ -1766,6 +1917,100 @@ inline void MatchStart::set_allocated_cards(::std::string* cards) {
 
 // -------------------------------------------------------------------
 
+// NewTurn
+
+// required string newCard = 1;
+inline bool NewTurn::has_newcard() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void NewTurn::set_has_newcard() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void NewTurn::clear_has_newcard() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void NewTurn::clear_newcard() {
+  newcard_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_newcard();
+}
+inline const ::std::string& NewTurn::newcard() const {
+  // @@protoc_insertion_point(field_get:protocol.NewTurn.newCard)
+  return newcard_.GetNoArena();
+}
+inline void NewTurn::set_newcard(const ::std::string& value) {
+  set_has_newcard();
+  newcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.NewTurn.newCard)
+}
+#if LANG_CXX11
+inline void NewTurn::set_newcard(::std::string&& value) {
+  set_has_newcard();
+  newcard_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:protocol.NewTurn.newCard)
+}
+#endif
+inline void NewTurn::set_newcard(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_newcard();
+  newcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.NewTurn.newCard)
+}
+inline void NewTurn::set_newcard(const char* value, size_t size) {
+  set_has_newcard();
+  newcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.NewTurn.newCard)
+}
+inline ::std::string* NewTurn::mutable_newcard() {
+  set_has_newcard();
+  // @@protoc_insertion_point(field_mutable:protocol.NewTurn.newCard)
+  return newcard_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NewTurn::release_newcard() {
+  // @@protoc_insertion_point(field_release:protocol.NewTurn.newCard)
+  if (!has_newcard()) {
+    return NULL;
+  }
+  clear_has_newcard();
+  return newcard_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NewTurn::set_allocated_newcard(::std::string* newcard) {
+  if (newcard != NULL) {
+    set_has_newcard();
+  } else {
+    clear_has_newcard();
+  }
+  newcard_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), newcard);
+  // @@protoc_insertion_point(field_set_allocated:protocol.NewTurn.newCard)
+}
+
+// optional int32 roomCounter = 2;
+inline bool NewTurn::has_roomcounter() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void NewTurn::set_has_roomcounter() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void NewTurn::clear_has_roomcounter() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void NewTurn::clear_roomcounter() {
+  roomcounter_ = 0;
+  clear_has_roomcounter();
+}
+inline ::google::protobuf::int32 NewTurn::roomcounter() const {
+  // @@protoc_insertion_point(field_get:protocol.NewTurn.roomCounter)
+  return roomcounter_;
+}
+inline void NewTurn::set_roomcounter(::google::protobuf::int32 value) {
+  set_has_roomcounter();
+  roomcounter_ = value;
+  // @@protoc_insertion_point(field_set:protocol.NewTurn.roomCounter)
+}
+
+// -------------------------------------------------------------------
+
 // ErrorResponse
 
 // required string errorMessage = 1;
@@ -2136,13 +2381,13 @@ inline void ClientMessage::set_allocated_msgroom(::protocol::RoomMessage* msgroo
 
 // required int32 option = 1;
 inline bool ServerMessage::has_option() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void ServerMessage::set_has_option() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void ServerMessage::clear_has_option() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void ServerMessage::clear_option() {
   option_ = 0;
@@ -2390,9 +2635,69 @@ inline void ServerMessage::set_allocated_start(::protocol::MatchStart* start) {
   // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.start)
 }
 
+// optional .protocol.NewTurn turn = 6;
+inline bool ServerMessage::has_turn() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void ServerMessage::set_has_turn() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void ServerMessage::clear_has_turn() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void ServerMessage::clear_turn() {
+  if (turn_ != NULL) turn_->Clear();
+  clear_has_turn();
+}
+inline const ::protocol::NewTurn& ServerMessage::_internal_turn() const {
+  return *turn_;
+}
+inline const ::protocol::NewTurn& ServerMessage::turn() const {
+  const ::protocol::NewTurn* p = turn_;
+  // @@protoc_insertion_point(field_get:protocol.ServerMessage.turn)
+  return p != NULL ? *p : *reinterpret_cast<const ::protocol::NewTurn*>(
+      &::protocol::_NewTurn_default_instance_);
+}
+inline ::protocol::NewTurn* ServerMessage::release_turn() {
+  // @@protoc_insertion_point(field_release:protocol.ServerMessage.turn)
+  clear_has_turn();
+  ::protocol::NewTurn* temp = turn_;
+  turn_ = NULL;
+  return temp;
+}
+inline ::protocol::NewTurn* ServerMessage::mutable_turn() {
+  set_has_turn();
+  if (turn_ == NULL) {
+    auto* p = CreateMaybeMessage<::protocol::NewTurn>(GetArenaNoVirtual());
+    turn_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ServerMessage.turn)
+  return turn_;
+}
+inline void ServerMessage::set_allocated_turn(::protocol::NewTurn* turn) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete turn_;
+  }
+  if (turn) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      turn = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, turn, submessage_arena);
+    }
+    set_has_turn();
+  } else {
+    clear_has_turn();
+  }
+  turn_ = turn;
+  // @@protoc_insertion_point(field_set_allocated:protocol.ServerMessage.turn)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

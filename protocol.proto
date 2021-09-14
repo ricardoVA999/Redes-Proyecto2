@@ -33,6 +33,13 @@ message MatchStart {
   required string cards = 1;
 }
 
+// ----- NUEVO TURNO -----
+message NewTurn {
+  required string newCard = 1;
+  optional int32 roomCounter = 2;
+}
+
+
 // ERROR GENERALIZADO
 message ErrorResponse {
   required string errorMessage = 1;
@@ -64,6 +71,7 @@ message ClientMessage {
 // option 2: ErrorResponse
 // option 3: Notification
 // option 4: MatchStart
+// option 5: NewTurn
 message ServerMessage {
   required int32 option = 1;
 
@@ -71,4 +79,5 @@ message ServerMessage {
   optional ErrorResponse error = 3;
   optional Notification noti = 4;
   optional MatchStart start = 5;
+  optional NewTurn turn = 6; 
 }
