@@ -158,7 +158,7 @@ void *ThreadWork(void *params)
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
-        if (messageReceived.option() == 2)
+        else if (messageReceived.option() == 2)
         {
             protocol::JoinRoom JoinRoom = messageReceived.roomjoin();
             thisClient.room = JoinRoom.room();
@@ -205,7 +205,7 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
 
-                std::chrono::seconds dura(3);
+                std::chrono::seconds dura(2);
                 std::this_thread::sleep_for( dura );
                 // Mandar primer turno
                 char buffer[8192];
@@ -226,7 +226,7 @@ void *ThreadWork(void *params)
                 send(clients[allRooms[thisClient.room-1].users.front()]->socketFd, buffer, message_serialized.size() + 1, 0);
             }
         }
-        if (messageReceived.option() == 3)
+        else if (messageReceived.option() == 3)
         {
             // Mandar el mensaje a todos los participantes menos a si mismo
             char buffer[8192];
@@ -246,7 +246,7 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
         }
-        if (messageReceived.option() == 4)
+        else if (messageReceived.option() == 4)
         {
             std::string list_to_sent = "";
             
@@ -268,6 +268,93 @@ void *ThreadWork(void *params)
             response.SerializeToString(&message_serialized);
             strcpy(buffer, message_serialized.c_str());
             send(socketFd, buffer, message_serialized.size() + 1, 0);
+        }
+        else if (messageReceived.option() == 5)
+        {
+            protocol::SendCard myCard =  messageReceived.card();
+            std::string cardToOperate = myCard.card();
+            std::string delimiter = "-";
+            std::string token = cardToOperate.substr(0, cardToOperate.find(delimiter));
+
+            // Hacer cambios en el contador de la room
+            if (token == "A"){
+                allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter+1;
+            }
+            else if (token == "10"){
+                if (myCard.extra() == 0){
+                    allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter + 10;
+                }
+                else if (myCard.extra() == 1){
+                    allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter - 10;
+                    if (allRooms[thisClient.room-1].counter < 0){
+                        allRooms[thisClient.room-1].counter = 0;
+                    }
+                }
+            }
+            else if (token == "J"){
+                allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter - 10;
+                if (allRooms[thisClient.room-1].counter < 0){
+                    allRooms[thisClient.room-1].counter = 0;
+                }
+            }
+            else if (token == "Q"){}
+            else if (token == "K"){
+                allRooms[thisClient.room-1].counter = 99;
+            }
+            else if (token == "Joker"){
+                allRooms[thisClient.room-1].counter = 0;
+            }
+            else{
+                int toSum = std::stoi(token);
+                allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter+toSum;
+            }
+
+            // Notificar a los usuarios del cambio
+            char buffer[8192];
+            std::string message_serialized;
+            
+            protocol::Notification *noti = new protocol::Notification();
+            noti->set_notimessage("El usuario "+thisClient.username+" ha usado la carta: "+ cardToOperate + " el contador a cambiado a "+ std::to_string(allRooms[thisClient.room-1].counter));
+
+            protocol::ServerMessage response;
+            response.set_option(3);
+            response.set_allocated_noti(noti);
+            response.SerializeToString(&message_serialized);
+            strcpy(buffer, message_serialized.c_str());
+
+            for (auto it = allRooms[thisClient.room-1].users.begin(); it != allRooms[thisClient.room-1].users.end(); ++it)
+                if (*it != thisClient.username){
+                    send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
+                }
+
+            //Pasar de turno
+            std::chrono::seconds dura(2);
+            std::this_thread::sleep_for( dura );
+
+            // Mandar primer turno
+            protocol::NewTurn *turn = new protocol::NewTurn;
+
+            std::string newCard = "";
+            newCard = newCard +""+allRooms[thisClient.room-1].roomDeck.front();
+            allRooms[thisClient.room-1].roomDeck.erase(allRooms[thisClient.room-1].roomDeck.begin());
+            turn->set_newcard(newCard);
+            turn->set_roomcounter(allRooms[thisClient.room-1].counter);
+
+            protocol::ServerMessage turnResponse;
+            turnResponse.set_option(5);
+            turnResponse.set_allocated_turn(turn);
+            turnResponse.SerializeToString(&message_serialized);
+            strcpy(buffer, message_serialized.c_str());
+
+                auto it = find(allRooms[thisClient.room-1].users.begin(), allRooms[thisClient.room-1].users.end(), thisClient.username);
+                int index = it - allRooms[thisClient.room-1].users.begin();
+ 
+                if (index != allRooms[thisClient.room-1].users.size()-1)
+                {
+                    send(clients[allRooms[thisClient.room-1].users[index+1]]->socketFd, buffer, message_serialized.size() + 1, 0);
+                }else{
+                    send(clients[allRooms[thisClient.room-1].users.front()]->socketFd, buffer, message_serialized.size() + 1, 0);
+                }
         }
     }
     // Cuando el cliente se desconecta se elimina de la lista y se cierra su socket

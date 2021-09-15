@@ -400,6 +400,7 @@ int main(int argc, char *argv[])
 					}
 
 					if (roomCounter < 100){
+						myTurn = 0;
 						myCards.erase(myCards.begin() + client_opt - 1);
 						printf("Tu nueva carta es %s\n", newCard.c_str());
 						myCards.insert(myCards.end(),newCard);
@@ -422,7 +423,6 @@ int main(int argc, char *argv[])
 						//Todo send lostRound
 					}
 					printf("El contador ahora es %d\n", roomCounter);
-					printf("Su nueva carta es %s\n", newCard.c_str());	
 				}
 				else{
 					printf("Dicha opcion no existe\n");
