@@ -28,6 +28,7 @@ extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::in
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Notification;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_RoomMessage;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_RoomsToJoin;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_SendCard;
 }  // namespace protobuf_protocol_2eproto
 namespace protocol {
 class ClientConnectDefaultTypeInternal {
@@ -60,6 +61,11 @@ class NewTurnDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<NewTurn>
       _instance;
 } _NewTurn_default_instance_;
+class SendCardDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<SendCard>
+      _instance;
+} _SendCard_default_instance_;
 class ErrorResponseDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<ErrorResponse>
@@ -166,6 +172,20 @@ static void InitDefaultsNewTurn() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_NewTurn =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsNewTurn}, {}};
 
+static void InitDefaultsSendCard() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::protocol::_SendCard_default_instance_;
+    new (ptr) ::protocol::SendCard();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::protocol::SendCard::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_SendCard =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsSendCard}, {}};
+
 static void InitDefaultsErrorResponse() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -205,11 +225,12 @@ static void InitDefaultsClientMessage() {
   ::protocol::ClientMessage::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<3> scc_info_ClientMessage =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 3, InitDefaultsClientMessage}, {
+::google::protobuf::internal::SCCInfo<4> scc_info_ClientMessage =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 4, InitDefaultsClientMessage}, {
       &protobuf_protocol_2eproto::scc_info_ClientConnect.base,
       &protobuf_protocol_2eproto::scc_info_JoinRoom.base,
-      &protobuf_protocol_2eproto::scc_info_RoomMessage.base,}};
+      &protobuf_protocol_2eproto::scc_info_RoomMessage.base,
+      &protobuf_protocol_2eproto::scc_info_SendCard.base,}};
 
 static void InitDefaultsServerMessage() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -237,13 +258,14 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_RoomMessage.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MatchStart.base);
   ::google::protobuf::internal::InitSCC(&scc_info_NewTurn.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_SendCard.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ErrorResponse.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Notification.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ClientMessage.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ServerMessage.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[10];
+::google::protobuf::Metadata file_level_metadata[11];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientConnect, _has_bits_),
@@ -294,6 +316,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::NewTurn, roomcounter_),
   0,
   1,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::SendCard, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::SendCard, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::SendCard, card_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::SendCard, extra_),
+  0,
+  1,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ErrorResponse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ErrorResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -318,11 +349,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, connect_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, roomjoin_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, msgroom_),
-  3,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ClientMessage, card_),
   4,
+  5,
   0,
   1,
   2,
+  3,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ServerMessage, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::protocol::ServerMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -348,10 +381,11 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 25, 31, sizeof(::protocol::RoomMessage)},
   { 32, 38, sizeof(::protocol::MatchStart)},
   { 39, 46, sizeof(::protocol::NewTurn)},
-  { 48, 54, sizeof(::protocol::ErrorResponse)},
-  { 55, 61, sizeof(::protocol::Notification)},
-  { 62, 72, sizeof(::protocol::ClientMessage)},
-  { 77, 88, sizeof(::protocol::ServerMessage)},
+  { 48, 55, sizeof(::protocol::SendCard)},
+  { 57, 63, sizeof(::protocol::ErrorResponse)},
+  { 64, 70, sizeof(::protocol::Notification)},
+  { 71, 82, sizeof(::protocol::ClientMessage)},
+  { 88, 99, sizeof(::protocol::ServerMessage)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -361,6 +395,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_RoomMessage_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_MatchStart_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_NewTurn_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_SendCard_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_ErrorResponse_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_Notification_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::protocol::_ClientMessage_default_instance_),
@@ -382,7 +417,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 10);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 11);
 }
 
 void AddDescriptorsImpl() {
@@ -394,22 +429,23 @@ void AddDescriptorsImpl() {
       "(\t\"\030\n\010JoinRoom\022\014\n\004room\030\001 \002(\005\"\036\n\013RoomMess"
       "age\022\017\n\007message\030\001 \002(\t\"\033\n\nMatchStart\022\r\n\005ca"
       "rds\030\001 \002(\t\"/\n\007NewTurn\022\017\n\007newCard\030\001 \002(\t\022\023\n"
-      "\013roomCounter\030\002 \001(\005\"%\n\rErrorResponse\022\024\n\014e"
-      "rrorMessage\030\001 \002(\t\"#\n\014Notification\022\023\n\013not"
-      "iMessage\030\001 \002(\t\"\247\001\n\rClientMessage\022\016\n\006opti"
-      "on\030\001 \002(\005\022\016\n\006userId\030\002 \001(\005\022(\n\007connect\030\003 \001("
-      "\0132\027.protocol.ClientConnect\022$\n\010roomJoin\030\004"
-      " \001(\0132\022.protocol.JoinRoom\022&\n\007msgRoom\030\005 \001("
-      "\0132\025.protocol.RoomMessage\"\331\001\n\rServerMessa"
-      "ge\022\016\n\006option\030\001 \002(\005\022$\n\005rooms\030\002 \001(\0132\025.prot"
-      "ocol.RoomsToJoin\022&\n\005error\030\003 \001(\0132\027.protoc"
-      "ol.ErrorResponse\022$\n\004noti\030\004 \001(\0132\026.protoco"
-      "l.Notification\022#\n\005start\030\005 \001(\0132\024.protocol"
-      ".MatchStart\022\037\n\004turn\030\006 \001(\0132\021.protocol.New"
-      "Turn"
+      "\013roomCounter\030\002 \001(\005\"\'\n\010SendCard\022\014\n\004card\030\001"
+      " \002(\t\022\r\n\005extra\030\002 \001(\005\"%\n\rErrorResponse\022\024\n\014"
+      "errorMessage\030\001 \002(\t\"#\n\014Notification\022\023\n\013no"
+      "tiMessage\030\001 \002(\t\"\311\001\n\rClientMessage\022\016\n\006opt"
+      "ion\030\001 \002(\005\022\016\n\006userId\030\002 \001(\005\022(\n\007connect\030\003 \001"
+      "(\0132\027.protocol.ClientConnect\022$\n\010roomJoin\030"
+      "\004 \001(\0132\022.protocol.JoinRoom\022&\n\007msgRoom\030\005 \001"
+      "(\0132\025.protocol.RoomMessage\022 \n\004card\030\006 \001(\0132"
+      "\022.protocol.SendCard\"\331\001\n\rServerMessage\022\016\n"
+      "\006option\030\001 \002(\005\022$\n\005rooms\030\002 \001(\0132\025.protocol."
+      "RoomsToJoin\022&\n\005error\030\003 \001(\0132\027.protocol.Er"
+      "rorResponse\022$\n\004noti\030\004 \001(\0132\026.protocol.Not"
+      "ification\022#\n\005start\030\005 \001(\0132\024.protocol.Matc"
+      "hStart\022\037\n\004turn\030\006 \001(\0132\021.protocol.NewTurn"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 724);
+      descriptor, 799);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "protocol.proto", &protobuf_RegisterTypes);
 }
@@ -2101,6 +2137,299 @@ void NewTurn::InternalSwap(NewTurn* other) {
 
 // ===================================================================
 
+void SendCard::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int SendCard::kCardFieldNumber;
+const int SendCard::kExtraFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+SendCard::SendCard()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_protocol_2eproto::scc_info_SendCard.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:protocol.SendCard)
+}
+SendCard::SendCard(const SendCard& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  card_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_card()) {
+    card_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.card_);
+  }
+  extra_ = from.extra_;
+  // @@protoc_insertion_point(copy_constructor:protocol.SendCard)
+}
+
+void SendCard::SharedCtor() {
+  card_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  extra_ = 0;
+}
+
+SendCard::~SendCard() {
+  // @@protoc_insertion_point(destructor:protocol.SendCard)
+  SharedDtor();
+}
+
+void SendCard::SharedDtor() {
+  card_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void SendCard::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* SendCard::descriptor() {
+  ::protobuf_protocol_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_protocol_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const SendCard& SendCard::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_protocol_2eproto::scc_info_SendCard.base);
+  return *internal_default_instance();
+}
+
+
+void SendCard::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.SendCard)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    card_.ClearNonDefaultToEmptyNoArena();
+  }
+  extra_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool SendCard::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:protocol.SendCard)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string card = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_card()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->card().data(), static_cast<int>(this->card().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "protocol.SendCard.card");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 extra = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+          set_has_extra();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &extra_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:protocol.SendCard)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:protocol.SendCard)
+  return false;
+#undef DO_
+}
+
+void SendCard::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:protocol.SendCard)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string card = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->card().data(), static_cast<int>(this->card().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "protocol.SendCard.card");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->card(), output);
+  }
+
+  // optional int32 extra = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->extra(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:protocol.SendCard)
+}
+
+::google::protobuf::uint8* SendCard::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.SendCard)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string card = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->card().data(), static_cast<int>(this->card().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "protocol.SendCard.card");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->card(), target);
+  }
+
+  // optional int32 extra = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->extra(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.SendCard)
+  return target;
+}
+
+size_t SendCard::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.SendCard)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required string card = 1;
+  if (has_card()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->card());
+  }
+  // optional int32 extra = 2;
+  if (has_extra()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->extra());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void SendCard::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.SendCard)
+  GOOGLE_DCHECK_NE(&from, this);
+  const SendCard* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const SendCard>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.SendCard)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.SendCard)
+    MergeFrom(*source);
+  }
+}
+
+void SendCard::MergeFrom(const SendCard& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.SendCard)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      set_has_card();
+      card_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.card_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      extra_ = from.extra_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void SendCard::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.SendCard)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SendCard::CopyFrom(const SendCard& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.SendCard)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SendCard::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void SendCard::Swap(SendCard* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SendCard::InternalSwap(SendCard* other) {
+  using std::swap;
+  card_.Swap(&other->card_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(extra_, other->extra_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata SendCard::GetMetadata() const {
+  protobuf_protocol_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_protocol_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void ErrorResponse::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -2608,6 +2937,8 @@ void ClientMessage::InitAsDefaultInstance() {
       ::protocol::JoinRoom::internal_default_instance());
   ::protocol::_ClientMessage_default_instance_._instance.get_mutable()->msgroom_ = const_cast< ::protocol::RoomMessage*>(
       ::protocol::RoomMessage::internal_default_instance());
+  ::protocol::_ClientMessage_default_instance_._instance.get_mutable()->card_ = const_cast< ::protocol::SendCard*>(
+      ::protocol::SendCard::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int ClientMessage::kOptionFieldNumber;
@@ -2615,6 +2946,7 @@ const int ClientMessage::kUserIdFieldNumber;
 const int ClientMessage::kConnectFieldNumber;
 const int ClientMessage::kRoomJoinFieldNumber;
 const int ClientMessage::kMsgRoomFieldNumber;
+const int ClientMessage::kCardFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ClientMessage::ClientMessage()
@@ -2644,6 +2976,11 @@ ClientMessage::ClientMessage(const ClientMessage& from)
   } else {
     msgroom_ = NULL;
   }
+  if (from.has_card()) {
+    card_ = new ::protocol::SendCard(*from.card_);
+  } else {
+    card_ = NULL;
+  }
   ::memcpy(&option_, &from.option_,
     static_cast<size_t>(reinterpret_cast<char*>(&userid_) -
     reinterpret_cast<char*>(&option_)) + sizeof(userid_));
@@ -2665,6 +3002,7 @@ void ClientMessage::SharedDtor() {
   if (this != internal_default_instance()) delete connect_;
   if (this != internal_default_instance()) delete roomjoin_;
   if (this != internal_default_instance()) delete msgroom_;
+  if (this != internal_default_instance()) delete card_;
 }
 
 void ClientMessage::SetCachedSize(int size) const {
@@ -2688,7 +3026,7 @@ void ClientMessage::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 15u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(connect_ != NULL);
       connect_->Clear();
@@ -2701,8 +3039,12 @@ void ClientMessage::Clear() {
       GOOGLE_DCHECK(msgroom_ != NULL);
       msgroom_->Clear();
     }
+    if (cached_has_bits & 0x00000008u) {
+      GOOGLE_DCHECK(card_ != NULL);
+      card_->Clear();
+    }
   }
-  if (cached_has_bits & 24u) {
+  if (cached_has_bits & 48u) {
     ::memset(&option_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&userid_) -
         reinterpret_cast<char*>(&option_)) + sizeof(userid_));
@@ -2785,6 +3127,18 @@ bool ClientMessage::MergePartialFromCodedStream(
         break;
       }
 
+      // optional .protocol.SendCard card = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_card()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -2813,12 +3167,12 @@ void ClientMessage::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required int32 option = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->option(), output);
   }
 
   // optional int32 userId = 2;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->userid(), output);
   }
 
@@ -2840,6 +3194,12 @@ void ClientMessage::SerializeWithCachedSizes(
       5, this->_internal_msgroom(), output);
   }
 
+  // optional .protocol.SendCard card = 6;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      6, this->_internal_card(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -2856,12 +3216,12 @@ void ClientMessage::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required int32 option = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->option(), target);
   }
 
   // optional int32 userId = 2;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->userid(), target);
   }
 
@@ -2884,6 +3244,13 @@ void ClientMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         5, this->_internal_msgroom(), deterministic, target);
+  }
+
+  // optional .protocol.SendCard card = 6;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        6, this->_internal_card(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2909,7 +3276,7 @@ size_t ClientMessage::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->option());
   }
-  if (_has_bits_[0 / 32] & 7u) {
+  if (_has_bits_[0 / 32] & 15u) {
     // optional .protocol.ClientConnect connect = 3;
     if (has_connect()) {
       total_size += 1 +
@@ -2929,6 +3296,13 @@ size_t ClientMessage::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *msgroom_);
+    }
+
+    // optional .protocol.SendCard card = 6;
+    if (has_card()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *card_);
     }
 
   }
@@ -2967,7 +3341,7 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 31u) {
+  if (cached_has_bits & 63u) {
     if (cached_has_bits & 0x00000001u) {
       mutable_connect()->::protocol::ClientConnect::MergeFrom(from.connect());
     }
@@ -2978,9 +3352,12 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
       mutable_msgroom()->::protocol::RoomMessage::MergeFrom(from.msgroom());
     }
     if (cached_has_bits & 0x00000008u) {
-      option_ = from.option_;
+      mutable_card()->::protocol::SendCard::MergeFrom(from.card());
     }
     if (cached_has_bits & 0x00000010u) {
+      option_ = from.option_;
+    }
+    if (cached_has_bits & 0x00000020u) {
       userid_ = from.userid_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3002,7 +3379,7 @@ void ClientMessage::CopyFrom(const ClientMessage& from) {
 }
 
 bool ClientMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000008) != 0x00000008) return false;
+  if ((_has_bits_[0] & 0x00000010) != 0x00000010) return false;
   if (has_connect()) {
     if (!this->connect_->IsInitialized()) return false;
   }
@@ -3011,6 +3388,9 @@ bool ClientMessage::IsInitialized() const {
   }
   if (has_msgroom()) {
     if (!this->msgroom_->IsInitialized()) return false;
+  }
+  if (has_card()) {
+    if (!this->card_->IsInitialized()) return false;
   }
   return true;
 }
@@ -3024,6 +3404,7 @@ void ClientMessage::InternalSwap(ClientMessage* other) {
   swap(connect_, other->connect_);
   swap(roomjoin_, other->roomjoin_);
   swap(msgroom_, other->msgroom_);
+  swap(card_, other->card_);
   swap(option_, other->option_);
   swap(userid_, other->userid_);
   swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3556,6 +3937,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::MatchStart* Arena::Cre
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::NewTurn* Arena::CreateMaybeMessage< ::protocol::NewTurn >(Arena* arena) {
   return Arena::CreateInternal< ::protocol::NewTurn >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::SendCard* Arena::CreateMaybeMessage< ::protocol::SendCard >(Arena* arena) {
+  return Arena::CreateInternal< ::protocol::SendCard >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::protocol::ErrorResponse* Arena::CreateMaybeMessage< ::protocol::ErrorResponse >(Arena* arena) {
   return Arena::CreateInternal< ::protocol::ErrorResponse >(arena);

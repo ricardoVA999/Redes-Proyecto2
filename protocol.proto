@@ -39,6 +39,10 @@ message NewTurn {
   optional int32 roomCounter = 2;
 }
 
+message SendCard {
+  required string card = 1;
+  optional int32 extra = 2;
+}
 
 // ERROR GENERALIZADO
 message ErrorResponse {
@@ -56,6 +60,7 @@ message Notification {
 // option 2: JoinRoom
 // option 3: RoomMessage
 // option 4: UsersInRoom
+// option 5: SendCard
 message ClientMessage {
   required int32 option = 1;
   optional int32 userId = 2;
@@ -63,6 +68,7 @@ message ClientMessage {
   optional ClientConnect connect = 3;
   optional JoinRoom roomJoin = 4;
   optional RoomMessage msgRoom = 5;
+  optional SendCard card = 6;
 }
 
 // SERVER GAME OPTIONS
