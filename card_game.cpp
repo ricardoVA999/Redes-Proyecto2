@@ -12,6 +12,8 @@
 #include <ifaddrs.h>
 #include "protocol.pb.h"
 #include <queue>
+#include <chrono>
+#include <thread>
 
 
 int connected, waitingForServerResponse, waitingForStart, lives, myTurn, roomCounter;
@@ -86,6 +88,14 @@ void *listenToMessages(void *args)
 			std::cout << "Contador acutal de la partida: "<<roomCounter<<std::endl;
 			printf("Que accion desea realizar... Recarge menu - 0\n");
 			
+		}
+		else if (serverMsg.option() == 6){
+			printf("___________________HAS GANADO LA PARTIDA___________________\n");
+			connected = 0;
+		}
+		else if (serverMsg.option() == 7){
+			printf("___________________HAS PERDIDO LA PARTIDA___________________\n");
+			connected = 0;
 		}
 
 		waitingForServerResponse = 0;
@@ -243,7 +253,7 @@ int main(int argc, char *argv[])
 	pthread_attr_init(&attrs);
 	pthread_create(&thread_id, &attrs, listenToMessages, (void *)&sockfd);
 
-	while (true)
+	while (connected == 1)
 	{
 		while (waitingForServerResponse == 1){}
 		printf("Opciones dentro del room:\n");
@@ -323,7 +333,62 @@ int main(int argc, char *argv[])
 
 				}
 				else if (client_opt == 3){
-					//Todo
+					std::string toCheck = "";
+					std::string delimiter = "-";
+					std::string temp = "";
+					int isGood = 1;
+					for (auto it = myCards.begin(); it != myCards.end(); ++it)
+					{
+						std::string actual = *it;
+						std::string token = actual.substr(0, actual.find(delimiter));
+
+						if (temp == "" && token!="Joker"){
+							temp = token;
+						}
+
+						if (token == "Joker" || token == temp){
+							if (token!="Joker"){
+								temp = token;
+							}
+						}
+						else{
+							isGood = 0;
+						}
+					}
+					if (isGood == 1){
+						printf("___________________HAS GANADO LA PARTIDA___________________\n");
+						// Send win
+						protocol::ClientMessage lostMsg;
+						lostMsg.set_option(7);
+						lostMsg.SerializeToString(&message_serialized);
+						strcpy(buffer, message_serialized.c_str());
+						send(sockfd, buffer, message_serialized.size() + 1, 0);
+						return 0;
+					}else{
+						printf("MENTIROSO\n");
+						printf("Has perdido esta ronda\n");
+						lives = lives - 1;
+
+						protocol::ClientMessage lostMsg;
+						lostMsg.set_option(6);
+						lostMsg.SerializeToString(&message_serialized);
+						strcpy(buffer, message_serialized.c_str());
+						send(sockfd, buffer, message_serialized.size() + 1, 0);
+
+						if (lives > 0 )
+						{
+							myTurn = 0;
+							printf("Te quedan %d vidas\n", lives);
+							printf("Esperando que inicie nueva ronda.\n");
+						}
+						else
+						{
+							printf("No te quedan vidas has perdido el juego!\n");
+							std::chrono::seconds dura(2);
+							std::this_thread::sleep_for( dura );
+							return 0;
+						}
+					}
 				}
 				else if (client_opt == 4) {
 					protocol::ClientMessage listMsg;
@@ -415,14 +480,32 @@ int main(int argc, char *argv[])
 						cardMessage.SerializeToString(&message_serialized);
 						strcpy(buffer, message_serialized.c_str());
 						send(sockfd, buffer, message_serialized.size() + 1, 0);
+						printf("El contador ahora es %d\n", roomCounter);
 					}
 					else{
 						printf("Has perdido esta ronda\n");
 						lives = lives - 1;
-						printf("Te quedan %d vidas\n", lives);
-						//Todo send lostRound
+
+						protocol::ClientMessage lostMsg;
+						lostMsg.set_option(6);
+						lostMsg.SerializeToString(&message_serialized);
+						strcpy(buffer, message_serialized.c_str());
+						send(sockfd, buffer, message_serialized.size() + 1, 0);
+
+						if (lives > 0 )
+						{
+							myTurn = 0;
+							printf("Te quedan %d vidas\n", lives);
+							printf("Esperando que inicie nueva ronda.\n");
+						}
+						else
+						{
+							printf("No te quedan vidas has perdido el juego!\n");
+							std::chrono::seconds dura(2);
+            				std::this_thread::sleep_for( dura );
+							return 0;
+						}
 					}
-					printf("El contador ahora es %d\n", roomCounter);
 				}
 				else{
 					printf("Dicha opcion no existe\n");
@@ -433,7 +516,6 @@ int main(int argc, char *argv[])
 
 	// cerrar conexion
 	pthread_cancel(thread_id);
-	connected = 0;
 	close(sockfd);
 
 	return 0;

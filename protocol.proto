@@ -61,6 +61,8 @@ message Notification {
 // option 3: RoomMessage
 // option 4: UsersInRoom
 // option 5: SendCard
+// option 6: LostRound
+// option 7: WinNoti
 message ClientMessage {
   required int32 option = 1;
   optional int32 userId = 2;
@@ -78,6 +80,8 @@ message ClientMessage {
 // option 3: Notification
 // option 4: MatchStart
 // option 5: NewTurn
+// option 6: WinGame
+// option 7: LoseGame
 message ServerMessage {
   required int32 option = 1;
 
