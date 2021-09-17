@@ -14,38 +14,43 @@
 #include <chrono>
 #include <thread>
 
+using namespace std;
+
+// Funcion de ayuda para obtener siempre una permutacion diferente de mi Deck
 int randomfunc(int j)
 {
     return rand() % j;
 }
 
+// Estructura de mi cliente
 struct Client
 {
     int socketFd;
-    std::string username;
+    string username;
     char ipAddr[INET_ADDRSTRLEN];
     int room;
     int lives;
 };
 
+// Estructura de mi sala
 struct Room
 {
     int roomNo;
-    std::vector<std::string> roomDeck;
-    std::vector<std::string> users;
+    vector<string> roomDeck;
+    vector<string> users;
     int counter;
 };
 
 
-// Lista de clientes
-std::unordered_map<std::string, Client *> clients;
+// Lista de clientes y rooms
+unordered_map<string, Client *> clients;
 Room RoomOne;
 Room RoomTwo;
 
-std::vector<Room> allRooms {RoomOne, RoomTwo};
+vector<Room> allRooms {RoomOne, RoomTwo};
 
 // Lista de cartas:
-std::vector<std::string> deck {
+vector<string> deck {
     "A-D","2-D","3-D","4-D","5-D","6-D","7-D","8-D","9-D","10-D","J-D","Q-D","K-D",
     "A-P","2-P","3-P","4-P","5-P","6-P","7-P","8-P","9-P","10-P","J-P","Q-P","K-P",
     "A-C","2-C","3-C","4-C","5-C","6-C","7-C","8-C","9-C","10-C","J-C","Q-C","K-C",
@@ -55,9 +60,9 @@ std::vector<std::string> deck {
 
 
 // Funcion que manda errores
-void SendErrorResponse(int socketFd, std::string errorMsg)
+void SendErrorResponse(int socketFd, string errorMsg)
 {
-    std::string msgSerialized;
+    string msgSerialized;
     protocol::ErrorResponse *errorMessage = new protocol::ErrorResponse();
     errorMessage->set_errormessage(errorMsg);
     protocol::ServerMessage serverMessage;
@@ -69,6 +74,7 @@ void SendErrorResponse(int socketFd, std::string errorMsg)
     send(socketFd, buffer, sizeof buffer, 0);
 }
 
+// Funcion que maneja cada usuario con un thread diferente
 void *ThreadWork(void *params)
 {
     // Cliente actual
@@ -78,7 +84,7 @@ void *ThreadWork(void *params)
     char buffer[8192];
 
     // Estructura de los mensajes
-    std::string msgSerialized;
+    string msgSerialized;
     protocol::ClientMessage messageReceived;
 
     while(1)
@@ -89,10 +95,10 @@ void *ThreadWork(void *params)
             if (recv(socketFd, buffer, 8192, 0) == 0)
             {
                 // cliente cerro conexion
-                std::cout << "Servidor: el cliente "
+                cout << "Servidor: el cliente "
                           << thisClient.username
                           << " ha cerrado su sesión."
-                          << std::endl;
+                          << endl;
             }
             break;
         }
@@ -104,34 +110,34 @@ void *ThreadWork(void *params)
         {
             protocol::ClientConnect myInfo = messageReceived.connect();
 
-            std::cout << "Servidor: se recibió informacion de: "
+            cout << "Servidor: se recibió informacion de: "
                 << myInfo.username()
-                << std::endl;
+                << endl;
 
             // Revisar si nombre de usuario ya existe, si ya existe, se devuelver un error.
             if (clients.count(myInfo.username()) > 0)
             {
-                std::cout << "Servidor: el nombre de usuario ya existe." << std::endl;
+                cout << "Servidor: el nombre de usuario ya existe." << endl;
                 SendErrorResponse(socketFd, "El nombre de usuario ya existe.");
                 break;
             }
 
             // Send available rooms
-            std::string all_rooms = "";
-            std::string room_availabe = "";
+            string all_rooms = "";
+            string room_availabe = "";
 
             for (auto &it : allRooms)
             {
-                all_rooms = all_rooms + "-Id: " + std::to_string(it.roomNo) + " Espacios " + std::to_string(it.users.size()) + "/4\n";
+                all_rooms = all_rooms + "-Id: " + to_string(it.roomNo) + " Espacios " + to_string(it.users.size()) + "/4\n";
                 if (it.users.size() < 4)
                 {
-                    room_availabe = room_availabe+std::to_string(it.roomNo);
+                    room_availabe = room_availabe+to_string(it.roomNo);
                 }
             }
 
             // Escribir el mensaje de rooms
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
 
             protocol::RoomsToJoin *rooms = new protocol::RoomsToJoin();
             rooms->set_rooms(all_rooms);
@@ -146,9 +152,9 @@ void *ThreadWork(void *params)
 
 
             // Log del server
-            std::cout << "Servidor:  usuario agregado exitosamente con id: "
+            cout << "Servidor:  usuario agregado exitosamente con id: "
                       << socketFd
-                      << std::endl;
+                      << endl;
 
             // Guardar informacion de nuevo cliente
             thisClient.username = myInfo.username();
@@ -158,21 +164,23 @@ void *ThreadWork(void *params)
             strcpy(thisClient.ipAddr, newClientParams->ipAddr);
             clients[thisClient.username] = &thisClient;
         }
+        // Al unirse un usuario a una room
         else if (messageReceived.option() == 2)
         {
+            // Actualizar datos
             protocol::JoinRoom JoinRoom = messageReceived.roomjoin();
             thisClient.room = JoinRoom.room();
             allRooms[JoinRoom.room()-1].users.insert(allRooms[JoinRoom.room()-1].users.end(), thisClient.username);
             printf("Usuarios en room %d:\n", JoinRoom.room());
             for (auto it = allRooms[JoinRoom.room()-1].users.begin(); it != allRooms[JoinRoom.room()-1].users.end(); ++it)
-                std::cout << "-"<< *it ;
-            std::cout << "\n";
+                cout << "-"<< *it ;
+            cout << "\n";
 
             // Notificar que se unio un compa a todos de la room
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" Se ha conectado a la sala. "+ std::to_string(allRooms[JoinRoom.room()-1].users.size()) + "/4");
+            noti->set_notimessage("El usuario "+thisClient.username+" Se ha conectado a la sala. "+ to_string(allRooms[JoinRoom.room()-1].users.size()) + "/4");
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -186,10 +194,11 @@ void *ThreadWork(void *params)
                 }
             }
 
+            // En caso que la room este llena comenzar el juego
             if (allRooms[JoinRoom.room()-1].users.size() == 4){
                 for (auto it = allRooms[JoinRoom.room()-1].users.begin(); it != allRooms[JoinRoom.room()-1].users.end(); ++it){
 
-                    std::string user_cards = "";
+                    string user_cards = "";
                     for (int i = 0; i < 3; ++i){
                         user_cards = user_cards + allRooms[JoinRoom.room()-1].roomDeck.front()+',';
                         allRooms[JoinRoom.room()-1].roomDeck.erase(allRooms[JoinRoom.room()-1].roomDeck.begin());
@@ -205,14 +214,14 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
 
-                std::chrono::seconds dura(2);
-                std::this_thread::sleep_for( dura );
+                chrono::seconds dura(2);
+                this_thread::sleep_for( dura );
                 // Mandar primer turno
                 char buffer[8192];
-                std::string message_serialized;
+                string message_serialized;
                 protocol::NewTurn *turn = new protocol::NewTurn;
 
-                std::string newCard = "";
+                string newCard = "";
                 newCard = newCard +""+allRooms[JoinRoom.room()-1].roomDeck.front();
                 allRooms[JoinRoom.room()-1].roomDeck.erase(allRooms[JoinRoom.room()-1].roomDeck.begin());
                 turn->set_newcard(newCard);
@@ -226,14 +235,15 @@ void *ThreadWork(void *params)
                 send(clients[allRooms[thisClient.room-1].users.front()]->socketFd, buffer, message_serialized.size() + 1, 0);
             }
         }
+        // Envio de mensajes dentro del room
         else if (messageReceived.option() == 3)
         {
             // Mandar el mensaje a todos los participantes menos a si mismo
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" Ha enviado un mensaje: "+ messageReceived.msgroom().message());
+            noti->set_notimessage("- El usuario "+thisClient.username+" Ha enviado un mensaje: "+ messageReceived.msgroom().message());
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -246,18 +256,19 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
         }
+        // Mandar lista de usuarios conectados en el room
         else if (messageReceived.option() == 4)
         {
-            std::string list_to_sent = "";
+            string list_to_sent = "";
             
             for (auto item = allRooms[thisClient.room-1].users.begin(); item != allRooms[thisClient.room-1].users.end(); ++item)
             {
-                list_to_sent = list_to_sent + "Username: " + *item + "\n";
+                list_to_sent = list_to_sent + "- Username: " + *item + "\n";
             }
 
             // Mandar lista de usuarios en mi room
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             
             protocol::Notification *noti = new protocol::Notification();
             noti->set_notimessage(list_to_sent);
@@ -269,12 +280,13 @@ void *ThreadWork(void *params)
             strcpy(buffer, message_serialized.c_str());
             send(socketFd, buffer, message_serialized.size() + 1, 0);
         }
+        //Manejo general del juego dentro del room
         else if (messageReceived.option() == 5)
         {
             protocol::SendCard myCard =  messageReceived.card();
-            std::string cardToOperate = myCard.card();
-            std::string delimiter = "-";
-            std::string token = cardToOperate.substr(0, cardToOperate.find(delimiter));
+            string cardToOperate = myCard.card();
+            string delimiter = "-";
+            string token = cardToOperate.substr(0, cardToOperate.find(delimiter));
 
             // Hacer cambios en el contador de la room
             if (token == "A"){
@@ -305,16 +317,16 @@ void *ThreadWork(void *params)
                 allRooms[thisClient.room-1].counter = 0;
             }
             else{
-                int toSum = std::stoi(token);
+                int toSum = stoi(token);
                 allRooms[thisClient.room-1].counter = allRooms[thisClient.room-1].counter+toSum;
             }
 
             // Notificar a los usuarios del cambio
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" ha usado la carta: "+ cardToOperate + " el contador a cambiado a "+ std::to_string(allRooms[thisClient.room-1].counter));
+            noti->set_notimessage("- El usuario "+thisClient.username+" ha usado la carta: "+ cardToOperate + " el contador a cambiado a "+ to_string(allRooms[thisClient.room-1].counter));
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -329,13 +341,13 @@ void *ThreadWork(void *params)
 
             if (allRooms[thisClient.room-1].users.size()>1){
                 //Pasar de turno
-                std::chrono::seconds dura(2);
-                std::this_thread::sleep_for( dura );
+                chrono::seconds dura(2);
+                this_thread::sleep_for( dura );
 
                 // Mandar primer turno
                 protocol::NewTurn *turn = new protocol::NewTurn;
 
-                std::string newCard = "";
+                string newCard = "";
                 newCard = newCard +""+allRooms[thisClient.room-1].roomDeck.front();
                 allRooms[thisClient.room-1].roomDeck.erase(allRooms[thisClient.room-1].roomDeck.begin());
                 turn->set_newcard(newCard);
@@ -358,6 +370,7 @@ void *ThreadWork(void *params)
                 }
             }
         }
+        // En caso de perder la ronda
         else if (messageReceived.option() == 6)
         {
             //Quitar vida del usuario
@@ -365,10 +378,10 @@ void *ThreadWork(void *params)
             int newTurn = 1;
             // Notificar a los demas que el usuario perdio la ronda
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" ha perdido la ronda. Esperando que comienze la nueva ronda...");
+            noti->set_notimessage("- El usuario "+thisClient.username+" ha perdido la ronda. Esperando que comienze la nueva ronda...");
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -383,16 +396,18 @@ void *ThreadWork(void *params)
             
             // Resetear valores del room
             allRooms[thisClient.room-1].counter = 0;
-            std::random_shuffle(deck.begin(), deck.end(), randomfunc);
+            random_shuffle(deck.begin(), deck.end(), randomfunc);
             allRooms[thisClient.room-1].roomDeck = deck;
 
+            // Verificar que aun pueda jugar
             if (thisClient.lives == 0)
             {
+                // Notificar que el otro gano la partida
                 if (allRooms[thisClient.room-1].users.size()<3)
                 {
                     newTurn = 0;
-                    std::chrono::seconds dura(2);
-                    std::this_thread::sleep_for( dura );
+                    chrono::seconds dura(2);
+                    this_thread::sleep_for( dura );
 
                     protocol::ServerMessage response;
                     response.set_option(6);
@@ -404,12 +419,13 @@ void *ThreadWork(void *params)
                             send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                         }
                 }
+                // Notificar que perdi el juego
                 else {
-                    std::chrono::seconds dura(2);
-                    std::this_thread::sleep_for( dura );
+                    chrono::seconds dura(2);
+                    this_thread::sleep_for( dura );
 
                     protocol::Notification *noti = new protocol::Notification();
-                    noti->set_notimessage("El usuario "+thisClient.username+" ha perdido el juego!! Esperando que comienze la nueva ronda...");
+                    noti->set_notimessage("- El usuario "+thisClient.username+" ha perdido el juego!! Esperando que comienze la nueva ronda...");
 
                     protocol::ServerMessage response;
                     response.set_option(3);
@@ -423,14 +439,15 @@ void *ThreadWork(void *params)
                         }
                 }
             }
+            //En caso de continuar la partida mandar un nuevo turno
             if (newTurn = 1){
-                std::chrono::seconds dura(2);
-                std::this_thread::sleep_for( dura );
+                chrono::seconds dura(2);
+                this_thread::sleep_for( dura );
 
                 // Comenzar nueva ronda
                 for (auto it = allRooms[thisClient.room-1].users.begin(); it != allRooms[thisClient.room-1].users.end(); ++it){
 
-                    std::string user_cards = "";
+                    string user_cards = "";
                     for (int i = 0; i < 3; ++i){
                         user_cards = user_cards + allRooms[thisClient.room-1].roomDeck.front()+',';
                         allRooms[thisClient.room-1].roomDeck.erase(allRooms[thisClient.room-1].roomDeck.begin());
@@ -446,12 +463,12 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
 
-                std::this_thread::sleep_for( dura );
+                this_thread::sleep_for( dura );
 
                 // Mandar primer turno
                 protocol::NewTurn *turn = new protocol::NewTurn;
 
-                std::string newCard = "";
+                string newCard = "";
                 newCard = newCard +""+allRooms[thisClient.room-1].roomDeck.front();
                 allRooms[thisClient.room-1].roomDeck.erase(allRooms[thisClient.room-1].roomDeck.begin());
                 turn->set_newcard(newCard);
@@ -465,14 +482,15 @@ void *ThreadWork(void *params)
                 send(clients[allRooms[thisClient.room-1].users.front()]->socketFd, buffer, message_serialized.size() + 1, 0);
             }
         }
+        // En caso de ganar la partida con un trio
         else if (messageReceived.option() == 7)
         {
             // Notificar a los demas que el usuario ganado la partida
             char buffer[8192];
-            std::string message_serialized;
+            string message_serialized;
             
             protocol::Notification *noti = new protocol::Notification();
-            noti->set_notimessage("El usuario "+thisClient.username+" ha ganado la partida, con un trio!");
+            noti->set_notimessage("- El usuario "+thisClient.username+" ha ganado la partida, con un trio!");
 
             protocol::ServerMessage response;
             response.set_option(3);
@@ -485,8 +503,8 @@ void *ThreadWork(void *params)
                     send(clients[*it]->socketFd, buffer, message_serialized.size() + 1, 0);
                 }
             
-            std::chrono::seconds dura(2);
-            std::this_thread::sleep_for( dura );
+            chrono::seconds dura(2);
+            this_thread::sleep_for( dura );
 
             response.set_option(7);
             response.SerializeToString(&message_serialized);
@@ -503,17 +521,17 @@ void *ThreadWork(void *params)
     clients.erase(thisClient.username);
     for (auto &it : allRooms) // access by reference to avoid copying
     {  
-        auto itr = std::find(it.users.begin(), it.users.end(), thisClient.username);
+        auto itr = find(it.users.begin(), it.users.end(), thisClient.username);
         if (itr != it.users.end()) it.users.erase(itr);
     }
     close(socketFd);
-    std::string thisUser = thisClient.username;
+    string thisUser = thisClient.username;
     if (thisUser.empty())
         thisUser = "No cliente";
     // Log del server
-    std::cout << "Servidor: socket de " << thisUser
+    cout << "Servidor: socket de " << thisUser
               << " cerrado."
-              << std::endl;
+              << endl;
     pthread_exit(0);
     return 0;
 }
@@ -567,9 +585,9 @@ int main(int argc, char *argv[])
     // Las dos rooms del server
     int roomNo = 1;
 
-    for (auto &it : allRooms) // access by reference to avoid copying
+    for (auto &it : allRooms)
     {  
-        std::random_shuffle(deck.begin(), deck.end(), randomfunc);
+        random_shuffle(deck.begin(), deck.end(), randomfunc);
         it.roomNo = roomNo;
         it.roomDeck = deck;
         it.counter = 0;
